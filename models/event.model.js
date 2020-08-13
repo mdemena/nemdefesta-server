@@ -4,8 +4,14 @@ const eventSchema = new mongoose.Schema(
 	{
 		name: { type: String, required: true },
 		description: { type: String, required: true },
+		type: {
+			type: String,
+			default: 'Local Event',
+			enum: ['Local Event', 'Music Concert', 'Sport play'],
+		},
 		from: { type: Date, required: true },
 		to: { type: Date, required: true },
+		image: { type: String },
 		location: {
 			name: { type: String, required: true },
 			address: { type: String, required: true },
