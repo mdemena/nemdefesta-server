@@ -7,7 +7,7 @@ const locationSchema = new mongoose.Schema(
 		formatted_address: { type: String },
 		lat: { type: Number, default: 0 },
 		lng: { type: Number, default: 0 },
-		user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+		event: { type: mongoose.Schema.Types.ObjectId, ref: 'Event' },
 	},
 	{ timestamps: true }
 );
