@@ -280,4 +280,4 @@ Comment model
 
 [Repository Link](https://github.com/mdemena/nemdefesta-server)
 
-[Deploy Link]('https://server.nemdefesta.cat/ ')
+[Deploy Link]('https://server.nemdefesta.cat/')
