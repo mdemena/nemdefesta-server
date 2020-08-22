@@ -7,10 +7,12 @@ const favicon = require('serve-favicon');
 const logger = require('morgan');
 const path = require('path');
 const cors = require('cors');
+const passport = require('passport');
 
 const app = express();
 
 require('./configs/db.config');
+require('./configs/passport.config');
 
 const app_name = require('./package.json').name;
 const debug = require('debug')(
@@ -38,14 +40,29 @@ app.set('view engine', 'hbs');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
+require('./configs/session.config');
+
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(
+	cors({
+		credentials: true,
+		origin: ['*'], // <== aceptar llamadas desde este dominio
+	})
+);
+
 // default value for title local
-app.locals.title = 'In-Events - Stay updated of all events around you!!';
+app.locals.title =
+	'Nem De Festa !! - Estigues al dia de les festes majors del teu voltant';
 
 const index = require('./routes/index.routes');
 app.use('/', index);
 
+const auth = require('./routes/auth.routes');
+app.use('/api/auth', auth);
+
 const user = require('./routes/user.routes');
-app.use('/api/user', user);
+app.use('/api/users', user);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
