@@ -160,7 +160,8 @@ body:
 | Method | URL                      | Description                                                                  |
 | ------ | ------------------------ | ---------------------------------------------------------------------------- |
 | PATCH  | /api/events/like/:id     | Add a like to event                                                          |
-| PATCH  | /api/events/assist/:id   | Add an event to user assist list                                             |
+| PATCH  | /api/events/unlike/:id   | Add a unlike to event                                                        |
+| PATCH  | /api/events/attendee/:id | Add an event to user assist list                                             |
 | GET    | /api/locations/event/:id | Return location list for an event                                            |
 | GET    | /api/locations/:id       | Return location details: Location data, etc.                                 |
 | POST   | /api/locations/          | Create a new location event and return location event details: Location data |

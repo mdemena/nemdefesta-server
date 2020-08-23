@@ -12,7 +12,6 @@ router.get('/', async (req, res, next) => {
 	try {
 		let { fromDate, toDate, lng, lat, distance } = req.query;
 
-		let _fromDate = dayjs();
 		if (fromDate) {
 			console.log('Query From: ', fromDate);
 			fromDate = dayjs(new Date(fromDate));
@@ -21,7 +20,6 @@ router.get('/', async (req, res, next) => {
 		}
 
 		if (toDate) {
-			console.log('Query To: ', toDate);
 			toDate = dayjs(new Date(toDate));
 		} else {
 			toDate = dayjs(fromDate).add(1, 'month');
@@ -97,45 +95,50 @@ router.post('/', uploadCloud.single('imageEvent'), async (req, res, next) => {
 		res.status(500).json({ message: 'No estàs autenticat' });
 	}
 });
-router.put('/', uploadCloud.single('imageEvent'), async (req, res, next) => {
-	if (req.isAuthenticated()) {
-		const user = {
-			_id: req.user._id,
-			username: req.body.username,
-			name: req.body.name,
-			email: req.body.email,
-		};
-		let foundUser = await UserController.checkUsername(user.username, user._id);
-		if (foundUser) {
-			res.status(400).json({ message: 'Usuari existent. Utilitza un altre.' });
-			return;
-		} else {
-			foundUser = await UserController.checkEmail(user.email, user._id);
-			if (foundUser) {
-				res
-					.status(400)
-					.json({ message: 'Correu existent. Utilitza un altre.' });
-				return;
-			} else {
-				try {
-					if (req.file) {
-						user['image'] = req.file.path;
-					}
-					const editUser = await UserController.set(user);
+router.put('/:id', uploadCloud.single('imageEvent'), async (req, res, next) => {
+	const {
+		name,
+		description,
+		fromDate,
+		toDate,
+		locationName,
+		locationAddress,
+		locationFormattedAddress,
+		locationCoordinatesLng,
+		locationCoordinatesLat,
+	} = req.body;
 
-					res.status(200).json(editUser);
-				} catch (err) {
-					res.status(500).json(err);
-				}
-			}
+	if (req.isAuthenticated()) {
+		const event = {
+			_id: req.params.id,
+			name,
+			description,
+			fromDate: new Date(fromDate),
+			toDate: new Date(toDate),
+			location: {
+				name: locationName,
+				address: locationAddress,
+				formatted_address: locationFormattedAddress,
+				gpsLocation: {
+					type: 'Point',
+					coordinates: [locationCoordinatesLng, locationCoordinatesLat],
+				},
+			},
+		};
+
+		if (req.file) {
+			event['image'] = req.file.path;
 		}
+		const editEvent = await EventController.set(event);
+
+		res.status(200).json(editEvent);
 	} else {
 		res.status(500).json({ message: 'No estàs autenticat' });
 	}
 });
 router.patch(
 	'/upload/:id',
-	uploadCloud.single('imageAvatar'),
+	uploadCloud.single('imageEvent'),
 	async (req, res, next) => {
 		if (req.isAuthenticated()) {
 			try {
@@ -155,4 +158,46 @@ router.patch(
 		}
 	}
 );
+router.patch('/like/:id', async (req, res, next) => {
+	if (req.isAuthenticated()) {
+		try {
+			const editEvent = await EventController.like(req.params.id, req.user._id);
+			res.status(200).json(editEvent);
+		} catch (err) {
+			res.status(500).json(err);
+		}
+	} else {
+		res.status(500).json({ message: 'No estàs autenticat' });
+	}
+});
+router.patch('/unlike/:id', async (req, res, next) => {
+	if (req.isAuthenticated()) {
+		try {
+			const editEvent = await EventController.unlike(
+				req.params.id,
+				req.user._id
+			);
+			res.status(200).json(editEvent);
+		} catch (err) {
+			res.status(500).json(err);
+		}
+	} else {
+		res.status(500).json({ message: 'No estàs autenticat' });
+	}
+});
+router.patch('/attendee/:id', async (req, res, next) => {
+	if (req.isAuthenticated()) {
+		try {
+			const editEvent = await EventController.attendee(
+				req.params.id,
+				req.user._id
+			);
+			res.status(200).json(editEvent);
+		} catch (err) {
+			res.status(500).json(err);
+		}
+	} else {
+		res.status(500).json({ message: 'No estàs autenticat' });
+	}
+});
 module.exports = router;

@@ -15,7 +15,6 @@ class EventController {
 		}
 	}
 	static async addEvent(_event) {
-		console.log('Event: ', _event);
 		return await EventController.add(
 			_event.name,
 			_event.description,
@@ -35,13 +34,6 @@ class EventController {
 		_location,
 		_user
 	) {
-		console.log('Name: ', _name);
-		console.log('Description: ', _description);
-		console.log('From: ', _fromDate);
-		console.log('To: ', _toDate);
-		console.log('Image: ', _image);
-		console.log('Location: ', _location);
-		console.log('User: ', _user);
 		try {
 			const newEvent = await Event.create({
 				name: _name,
@@ -50,6 +42,9 @@ class EventController {
 				toDate: _toDate,
 				image: _image,
 				location: _location,
+				likes: [],
+				unlikes: [],
+				attendees: [],
 				user: _user,
 			});
 			return newEvent;
@@ -71,6 +66,72 @@ class EventController {
 			throw err;
 		}
 	}
+	static async like(_id, _user) {
+		try {
+			return await EventController.manageSubscriptions(
+				_id,
+				_user,
+				'likes',
+				'unlikes'
+			);
+		} catch (err) {
+			throw err;
+		}
+	}
+	static async unlike(_id, _user) {
+		try {
+			return await EventController.manageSubscriptions(
+				_id,
+				_user,
+				'unlikes',
+				'likes'
+			);
+		} catch (err) {
+			throw err;
+		}
+	}
+	static async attendee(_id, _user) {
+		try {
+			return await EventController.manageSubscriptions(
+				_id,
+				_user,
+				'attendees',
+				null
+			);
+		} catch (err) {
+			throw err;
+		}
+	}
+	static async manageSubscriptions(_id, _user, _array, _contraArray) {
+		try {
+			const editEvent = await EventController.get(_id);
+			if (editEvent) {
+				if (!editEvent[_array].includes(_user)) {
+					editEvent[_array].push(_user);
+					if (_contraArray) {
+						const contraIndex = editEvent[_contraArray].findIndex((user) =>
+							user.equals(_user)
+						);
+						if (contraIndex >= 0) {
+							editEvent[_contraArray].splice(contraIndex, 1);
+							console.log('Removed user in contra: ', contraIndex);
+						}
+					}
+				} else {
+					const delIndex = editEvent[_array].findIndex((user) =>
+						user.equals(_user)
+					);
+					if (delIndex >= 0) {
+						editEvent[_array].splice(delIndex, 1);
+					}
+				}
+			}
+			return await editEvent.save();
+		} catch (err) {
+			throw err;
+		}
+	}
+
 	static async delete(_id) {
 		const delUser = await Event.findByIdAndRemove(_id);
 		return delUser;

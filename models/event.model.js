@@ -21,8 +21,9 @@ const eventSchema = new mongoose.Schema(
 				coordinates: [{ type: Number }],
 			},
 		},
-		likes: { type: Number, default: 0 },
-		assistants: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+		likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+		unlikes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+		attendees: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
 		user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
 	},
 	{ timestamps: true }
