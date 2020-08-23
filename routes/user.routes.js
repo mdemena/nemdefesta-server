@@ -2,9 +2,7 @@ const express = require('express');
 const UserController = require('../controllers/user.controller');
 const router = express.Router();
 const uploadCloud = require('../configs/cloudinary.config.js');
-const passport = require('passport');
 
-/* GET home page. */
 router.get('/', async (req, res, next) => {
 	try {
 		const users = await UserController.list();
@@ -21,22 +19,26 @@ router.get('/:id', async (req, res, next) => {
 		res.status(500).json(err);
 	}
 });
-router.put(
-	'/:id',
-	uploadCloud.single('imageAvatar'),
-	async (req, res, next) => {
+router.put('/', uploadCloud.single('imageAvatar'), async (req, res, next) => {
+	if (req.isAuthenticated()) {
 		const user = {
-			_id: req.params.id,
+			_id: req.user._id,
 			username: req.body.username,
 			name: req.body.name,
 			email: req.body.email,
 		};
-		let foundUser = await UserController.checkUsername(user.username, user._id);
+		let foundUser = await UserController.checkUsernameDifferentUser(
+			user.username,
+			user._id
+		);
 		if (foundUser) {
 			res.status(400).json({ message: 'Usuari existent. Utilitza un altre.' });
 			return;
 		} else {
-			foundUser = await UserController.checkEmail(user.email, user._id);
+			foundUser = await UserController.checkEmailDifferentUser(
+				user.email,
+				user._id
+			);
 			if (foundUser) {
 				res
 					.status(400)
@@ -55,23 +57,29 @@ router.put(
 				}
 			}
 		}
+	} else {
+		res.status(500).json({ message: 'No estàs autenticat' });
 	}
-);
+});
 router.patch(
-	'/upload/:id',
+	'/upload/',
 	uploadCloud.single('imageAvatar'),
 	async (req, res, next) => {
-		try {
-			if (req.file) {
-				const editUser = await UserController.setImage(
-					req.params.id,
-					req.file.path
-				);
+		if (req.isAuthenticated()) {
+			try {
+				if (req.file) {
+					const editUser = await UserController.setImage(
+						req.user._id,
+						req.file.path
+					);
 
-				res.status(200).json(editUser);
+					res.status(200).json(editUser);
+				}
+			} catch (err) {
+				res.status(500).json(err);
 			}
-		} catch (err) {
-			res.status(500).json(err);
+		} else {
+			res.status(500).json({ message: 'No estàs autenticat' });
 		}
 	}
 );
@@ -79,11 +87,13 @@ router.post('/checkemail', async (req, res, next) => {
 	try {
 		let exist = null;
 		if (req.user) {
-			exist = await UserController.checkEmail(req.body.email, req.user._id);
+			exist = await UserController.checkEmailDifferentUser(
+				req.body.email,
+				req.user._id
+			);
 		} else {
 			exist = await UserController.checkEmail(req.body.email);
 		}
-		console.log(exist);
 		if (exist) {
 			res.status(200).json(exist);
 		} else {
@@ -97,7 +107,7 @@ router.post('/checkusername', async (req, res, next) => {
 	try {
 		let exist = null;
 		if (req.user) {
-			exist = await UserController.checkUsername(
+			exist = await UserController.checkUsernameDifferentUser(
 				req.body.username,
 				req.user._id
 			);

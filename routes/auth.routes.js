@@ -18,8 +18,8 @@ router.post('/login', (req, res, next) => {
 			return;
 		}
 
-		req.login(user, (err) => {
-			if (err) {
+		req.login(user, (loginErr) => {
+			if (loginErr) {
 				res.status(500).json({ message: `Sessió no grabda correctament` });
 				return;
 			}

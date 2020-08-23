@@ -11,8 +11,10 @@ const passport = require('passport');
 
 const app = express();
 
+require('dayjs/locale/es');
 require('./configs/db.config');
 require('./configs/passport.config');
+require('./configs/session.config')(app);
 
 const app_name = require('./package.json').name;
 const debug = require('debug')(
@@ -40,8 +42,6 @@ app.set('view engine', 'hbs');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
-require('./configs/session.config');
-
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(
@@ -63,6 +63,9 @@ app.use('/api/auth', auth);
 
 const user = require('./routes/user.routes');
 app.use('/api/users', user);
+
+const event = require('./routes/event.routes');
+app.use('/api/events', event);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
