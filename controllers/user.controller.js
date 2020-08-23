@@ -52,7 +52,7 @@ class UserController {
 	static async checkEmail(_email) {
 		return await User.findOne({ email: _email });
 	}
-	static async checkEmail(_email, _id) {
+	static async checkEmailDifferentUser(_email, _id) {
 		return await User.findOne({
 			email: { $eq: _email },
 			_id: { $ne: _id },
@@ -61,7 +61,7 @@ class UserController {
 	static async checkUsername(_username) {
 		return await User.findOne({ username: _username });
 	}
-	static async checkUsername(_username, _id) {
+	static async checkUsernameDifferentUser(_username, _id) {
 		return await User.findOne({
 			username: { $eq: _username },
 			_id: { $ne: _id },
