@@ -47,7 +47,7 @@ app.use(passport.session());
 app.use(
 	cors({
 		credentials: true,
-		origin: ['*'], // <== aceptar llamadas desde este dominio
+		origin: process.env.CORS_DOMAINS, // <== aceptar llamadas desde este dominio
 	})
 );
 

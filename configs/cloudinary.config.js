@@ -11,7 +11,7 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
 	cloudinary: cloudinary,
 	params: {
-		folder: 'in-events', // la carpeta en cloudinary
+		folder: 'nemdefesta', // la carpeta en cloudinary
 		format: async (req, file) => 'png',
 		// para mantener el nombre original:
 		public_id: (req, file) => file.originalname,
