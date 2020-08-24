@@ -53,7 +53,7 @@ app.use(
 
 // default value for title local
 app.locals.title =
-	'Nem De Festa !! - Estigues al dia de les festes majors del teu voltant';
+	'API - Nem De Festa !! - Estigues al dia de les festes majors del teu voltant';
 
 const index = require('./routes/index.routes');
 app.use('/', index);

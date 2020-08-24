@@ -4,9 +4,8 @@ const commentSchema = new mongoose.Schema(
 	{
 		title: { type: String, required: true },
 		description: { type: String, required: true },
-		likes: { type: Number, default: 0 },
-		event: { type: mongoose.Schema.Types.ObjectId, ref: 'Event' },
-		activity: { type: mongoose.Schema.Types.ObjectId, ref: 'Activity' },
+		likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+		unlikes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
 		user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
 	},
 	{ timestamps: true }

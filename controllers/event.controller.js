@@ -2,7 +2,9 @@ const Event = require('../models/event.model');
 const mongoose = require('mongoose');
 class EventController {
 	static async get(_id) {
-		return await Event.findById(_id).populate('assistants.User');
+		return await Event.findById(_id)
+			.populate('assistants.User')
+			.populate('Comment');
 	}
 	static async set(_event) {
 		try {
@@ -133,8 +135,8 @@ class EventController {
 	}
 
 	static async delete(_id) {
-		const delUser = await Event.findByIdAndRemove(_id);
-		return delUser;
+		const delEvent = await Event.findByIdAndRemove(_id);
+		return delEvent;
 	}
 	static async list() {
 		return await Event.find();

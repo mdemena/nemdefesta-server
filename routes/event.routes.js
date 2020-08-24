@@ -73,7 +73,7 @@ router.post('/', uploadCloud.single('imageEvent'), async (req, res, next) => {
 			location: {
 				name: locationName,
 				address: locationAddress,
-				formatted_address: locationFormattedAddress,
+				formattedAddress: locationFormattedAddress,
 				gpsLocation: {
 					coordinates: [locationCoordinatesLng, locationCoordinatesLat],
 				},
@@ -118,7 +118,7 @@ router.put('/:id', uploadCloud.single('imageEvent'), async (req, res, next) => {
 			location: {
 				name: locationName,
 				address: locationAddress,
-				formatted_address: locationFormattedAddress,
+				formattedAddress: locationFormattedAddress,
 				gpsLocation: {
 					type: 'Point',
 					coordinates: [locationCoordinatesLng, locationCoordinatesLat],

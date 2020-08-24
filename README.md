@@ -286,8 +286,10 @@ Event model
     - lat: Number
     - lng: Number
 		}
-- likes: Number
+- likes: Array of User id,
+- unlikes: Array of User id,
 - assistants: Array of User id,
+- comments: Array of Comment id,
 - user: User id
 ```
 
@@ -310,8 +312,10 @@ Activity model
 - to: Date
 - image: String
 - location: Location Id
-- likes: Number
+- likes: Array of User id,
+- unlikes: Array of User id,
 - assistants: Array of User id,
+- comments: Array of Comment id,
 - event: Event id
 ```
 
@@ -319,9 +323,8 @@ Activity model
 Comment model
 - title: String
 - description: String
-- likes: Number
-- event: Event id,
-- activity: Activity Id
+- likes: Array of User id,
+- unlikes: Array of User id,
 - user: User Id,
 ```
 
