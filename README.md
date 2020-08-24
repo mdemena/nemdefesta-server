@@ -157,12 +157,22 @@ body:
     - image
 ```
 
+| Method | URL                   | Description                             |
+| ------ | --------------------- | --------------------------------------- |
+| PATCH  | /api/events/image/:id | Add an image to image list for an event |
+
+```
+body:
+    - title
+    - description
+    - image
+```
+
 | Method | URL                      | Description                                                                  |
 | ------ | ------------------------ | ---------------------------------------------------------------------------- |
 | PATCH  | /api/events/like/:id     | Add a like to event                                                          |
 | PATCH  | /api/events/unlike/:id   | Add a unlike to event                                                        |
-| PATCH  | /api/events/attendee/:id | Add an event to user assist list                                             |
-| GET    | /api/locations/event/:id | Return location list for an event                                            |
+| PATCH  | /api/events/attendee/:id | Add an user to event assist list                                             |
 | GET    | /api/locations/:id       | Return location details: Location data, etc.                                 |
 | POST   | /api/locations/          | Create a new location event and return location event details: Location data |
 
@@ -229,9 +239,20 @@ body:
     - image
 ```
 
+| Method | URL                     | Description                                |
+| ------ | ----------------------- | ------------------------------------------ |
+| PATCH  | /api/activity/image/:id | Add an image to image list for an activity |
+
+```
+body:
+    - title
+    - description
+    - image
+```
 | Method | URL                      | Description                         |
 | ------ | ------------------------ | ----------------------------------- |
 | PATCH  | /api/activity/like/:id   | Add a like to event                 |
+| PATCH  | /api/activity/unlike/:id | Add an unlike to event              |
 | PATCH  | /api/activity/assist/:id | Add an activity to user assist list |
 
 | Method | URL               | Description                                                                           |
@@ -245,10 +266,10 @@ body:
     - description
 ```
 
-| Method | URL              | Description                                                   |
-| ------ | ---------------- | ------------------------------------------------------------- |
-| DELETE | /api/comments/id | Delete comment, then return comments details: Comments data   |
-| PUT    | /api/comments/id | Update comments info and return comment details: Comment data |
+| Method | URL               | Description                                                   |
+| ------ | ----------------- | ------------------------------------------------------------- |
+| DELETE | /api/comments/:id | Delete comment, then return comments details: Comments data   |
+| PUT    | /api/comments/:id | Update comments info and return comment details: Comment data |
 
 ```
 body:
@@ -256,9 +277,12 @@ body:
     - description
 ```
 
-| Method | URL                  | Description           |
-| ------ | -------------------- | --------------------- |
-| PATCH  | /api/comment/like/id | Add a like to comment |
+| Method | URL                     | Description              |
+| ------ | ----------------------- | ------------------------ |
+| PATCH  | /api/comment/like/:id   | Add a like to comment    |
+| PATCH  | /api/comment/unlike/:id | Add an unlike to comment |
+| PATCH  | /api/image/like/:id     | Add a like to image      |
+| PATCH  | /api/image/unlike/:id   | Add an unlike to image   |
 
 ## Models
 
@@ -279,17 +303,18 @@ Event model
 - from: Date
 - to: Date
 - image: String
-- location: {
+- location: 
     - name: String
     - address: String
     - formatted_address: String
     - lat: Number
     - lng: Number
-		}
-- likes: Array of User id,
-- unlikes: Array of User id,
-- assistants: Array of User id,
-- comments: Array of Comment id,
+- locations: Array of Location id
+- images: Array of String
+- likes: Array of User id
+- unlikes: Array of User id
+- assistants: Array of User id
+- comments: Array of Comment id
 - user: User id
 ```
 
@@ -312,10 +337,11 @@ Activity model
 - to: Date
 - image: String
 - location: Location Id
-- likes: Array of User id,
-- unlikes: Array of User id,
-- assistants: Array of User id,
-- comments: Array of Comment id,
+- images: Array of String
+- likes: Array of User id
+- unlikes: Array of User id
+- assistants: Array of User id
+- comments: Array of Comment id
 - event: Event id
 ```
 
@@ -323,6 +349,16 @@ Activity model
 Comment model
 - title: String
 - description: String
+- likes: Array of User id,
+- unlikes: Array of User id,
+- user: User Id,
+```
+
+```
+Image model
+- title: String
+- description: String
+- image: String
 - likes: Array of User id,
 - unlikes: Array of User id,
 - user: User Id,

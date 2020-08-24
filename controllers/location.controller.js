@@ -46,12 +46,12 @@ class LocationController {
 		const delLocation = await Location.findByIdAndRemove(_id);
 		return delLocation;
 	}
-	static async list() {
-		return await Location.find();
+	static async list(filter) {
+		return await Location.find(filter);
 	}
 	static async listByEvent(_event) {
 		const filter = { event: _event };
-		return await Location.find(filter);
+		return await LocationController.list(filter);
 	}
 }
 module.exports = LocationController;

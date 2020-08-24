@@ -2,15 +2,17 @@ const Event = require('../models/event.model');
 const mongoose = require('mongoose');
 class EventController {
 	static async get(_id) {
-		return await Event.findById(_id)
-			.populate('assistants.User')
-			.populate('Comment');
+		return await Event.findById(_id).populate([
+			'likes',
+			'unlikes',
+			'attendees',
+		]);
 	}
 	static async set(_event) {
 		try {
 			const editEvent = await Event.findByIdAndUpdate(_event._id, _event, {
 				new: true,
-			});
+			}).populate(['likes', 'unlikes', 'attendees']);
 			return editEvent;
 		} catch (err) {
 			console.log(err);
@@ -47,6 +49,7 @@ class EventController {
 				likes: [],
 				unlikes: [],
 				attendees: [],
+				comments: [],
 				user: _user,
 			});
 			return newEvent;
@@ -62,7 +65,7 @@ class EventController {
 				{
 					new: true,
 				}
-			);
+			).populate(['likes', 'unlikes', 'attendees']);
 			return editEvent;
 		} catch (err) {
 			throw err;
@@ -104,31 +107,67 @@ class EventController {
 			throw err;
 		}
 	}
-	static async manageSubscriptions(_id, _user, _array, _contraArray) {
+	static async comment(_id, _comment) {
 		try {
-			const editEvent = await EventController.get(_id);
+			return await EventController.manageSubscriptions(
+				_id,
+				_comment,
+				'comments',
+				null
+			);
+		} catch (err) {
+			throw err;
+		}
+	}
+	static async location(_id, _location) {
+		try {
+			return await EventController.manageSubscriptions(
+				_id,
+				_location,
+				'locations',
+				null
+			);
+		} catch (err) {
+			throw err;
+		}
+	}
+	static async images(_id, _image) {
+		try {
+			return await EventController.manageSubscriptions(
+				_id,
+				_image,
+				'images',
+				null
+			);
+		} catch (err) {
+			throw err;
+		}
+	}
+	static async manageSubscriptions(_id, _document, _array, _contraArray) {
+		try {
+			const editEvent = await Event.findById(_id);
 			if (editEvent) {
-				if (!editEvent[_array].includes(_user)) {
-					editEvent[_array].push(_user);
+				if (!editEvent[_array].includes(_document)) {
+					editEvent[_array].push(_document);
 					if (_contraArray) {
-						const contraIndex = editEvent[_contraArray].findIndex((user) =>
-							user.equals(_user)
+						const contraIndex = editEvent[_contraArray].findIndex((document) =>
+							document.equals(_document)
 						);
 						if (contraIndex >= 0) {
 							editEvent[_contraArray].splice(contraIndex, 1);
-							console.log('Removed user in contra: ', contraIndex);
 						}
 					}
 				} else {
-					const delIndex = editEvent[_array].findIndex((user) =>
-						user.equals(_user)
+					const delIndex = editEvent[_array].findIndex((document) =>
+						document.equals(_document)
 					);
 					if (delIndex >= 0) {
 						editEvent[_array].splice(delIndex, 1);
 					}
 				}
 			}
-			return await editEvent.save();
+			await editEvent.save();
+			return await EventController.get(editEvent._id);
 		} catch (err) {
 			throw err;
 		}
@@ -138,12 +177,16 @@ class EventController {
 		const delEvent = await Event.findByIdAndRemove(_id);
 		return delEvent;
 	}
-	static async list() {
-		return await Event.find();
+	static async list(_filter) {
+		return await Event.find(_filter).populate([
+			'likes',
+			'unlikes',
+			'attendees',
+		]);
 	}
 	static async listByDates(_fromDate, _toDate) {
 		const filter = { fromDate: { $lt: _toDate }, toDate: { $gt: _fromDate } };
-		return await Event.find(filter);
+		return await EventController.list(filter);
 	}
 	static async listByLocation(_lng, _lat, _distance) {
 		const filter = {
@@ -158,7 +201,7 @@ class EventController {
 				},
 			},
 		};
-		return await Event.find(filter);
+		return await EventController.list(filter);
 	}
 	static async listByDatesAndLocation(_from, _to, _lng, _lat, _distance) {
 		console.log('Form: ', _from);
@@ -184,10 +227,11 @@ class EventController {
 				},
 			},
 		};
-		return await Event.find(filter);
+		return await EventController.list(filter);
 	}
 	static async listByUser(_user) {
-		return await Event.find({ user: _user });
+		const filter = { user: _user };
+		return await EventController.list(filter);
 	}
 }
 module.exports = EventController;

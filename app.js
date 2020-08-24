@@ -58,14 +58,17 @@ app.locals.title =
 const index = require('./routes/index.routes');
 app.use('/', index);
 
-const auth = require('./routes/auth.routes');
-app.use('/api/auth', auth);
+const authRoute = require('./routes/auth.routes');
+app.use('/api/auth', authRoute);
 
-const user = require('./routes/user.routes');
-app.use('/api/users', user);
+const userRoute = require('./routes/user.routes');
+app.use('/api/users', userRoute);
 
-const event = require('./routes/event.routes');
-app.use('/api/events', event);
+const eventRoute = require('./routes/event.routes');
+app.use('/api/events', eventRoute);
+
+const locationRoute = require('./routes/location.routes');
+app.use('/api/locations', locationRoute);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

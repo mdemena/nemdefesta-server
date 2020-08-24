@@ -18,14 +18,6 @@ router.get('/:id', async (req, res, next) => {
 		res.status(500).json(err);
 	}
 });
-router.get('/event/:id', async (req, res, next) => {
-	try {
-		const locations = await LocationController.listByEvent(req.params.id);
-		res.status(200).json(locations);
-	} catch (err) {
-		res.status(500).json(err);
-	}
-});
 router.post('/', async (req, res, next) => {
 	const {
 		name,
@@ -37,18 +29,18 @@ router.post('/', async (req, res, next) => {
 	} = req.body;
 
 	if (req.isAuthenticated()) {
-		const location = {
-			name: name,
-			address: address,
-			formattedAddress: formattedAddress,
-			gpsLocation: {
-				coordinates: [longitude, latitude],
-			},
-			event: eventId,
-		};
-
 		try {
-			const newLocation = await LocationController.addEvent(event);
+			const location = {
+				name: name,
+				address: address,
+				formattedAddress: formattedAddress,
+				gpsLocation: {
+					coordinates: [longitude, latitude],
+				},
+				event: eventId,
+			};
+
+			const newLocation = await LocationController.addLocation(location);
 
 			res.status(200).json(newLocation);
 		} catch (err) {
