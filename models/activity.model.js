@@ -15,6 +15,7 @@ const activitySchema = new mongoose.Schema(
 		location: { type: mongoose.Schema.Types.ObjectId, ref: 'Location' },
 		likes: { type: Number, default: 0 },
 		assistants: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+		images: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Image' }],
 		event: { type: mongoose.Schema.Types.ObjectId, ref: 'Event' },
 	},
 	{ timestamps: true }

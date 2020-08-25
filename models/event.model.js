@@ -22,11 +22,12 @@ const eventSchema = new mongoose.Schema(
 			},
 		},
 		locations: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Location' }],
-		images: [{ type: String }],
+		activities: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Activity' }],
 		likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
 		unlikes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
 		attendees: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
 		comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
+		images: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Image' }],
 		user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
 	},
 	{ timestamps: true }

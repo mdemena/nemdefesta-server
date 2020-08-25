@@ -6,26 +6,26 @@ const uploadCloud = require('../configs/cloudinary.config');
 const UserController = require('../controllers/user.controller');
 
 router.post('/login', (req, res, next) => {
-	passport.authenticate('local', (err, user, failureDetails) => {
-		if (err) {
-			res
-				.status(500)
-				.json({ message: `Quelcom no ha funcionat correctament.` });
-			return;
-		}
-		if (!user) {
-			res.status(401).json(failureDetails);
-			return;
-		}
-
-		req.login(user, (loginErr) => {
-			if (loginErr) {
-				res.status(500).json({ message: `Sessió no grabda correctament` });
-				return;
-			}
-			res.status(200).json(user);
-		});
-	})(req, res, next);
+	console.log('Hola');
+	// passport.authenticate('local', (err, user, failureDetails) => {
+	// 	if (err) {
+	// 		res
+	// 			.status(500)
+	// 			.json({ message: `Quelcom no ha funcionat correctament.` });
+	// 		return;
+	// 	}
+	// 	if (!user) {
+	// 		res.status(401).json(failureDetails);
+	// 		return;
+	// 	}
+	// 	req.login(user, (loginErr) => {
+	// 		if (loginErr) {
+	// 			res.status(500).json({ message: `Sessió no grabada correctament` });
+	// 			return;
+	// 		}
+	// 		res.status(200).json(user);
+	// 	});
+	// })(req, res, next);
 });
 
 router.post('/signup', async (req, res, next) => {

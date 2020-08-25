@@ -1,14 +1,14 @@
 const Location = require('../models/location.model');
 const mongoose = require('mongoose');
 class LocationController {
-	static async get(_id) {
-		return await Location.findById(_id).populate('Event');
+	static async get(id) {
+		return await Location.findById(id).populate('Event');
 	}
-	static async set(_location) {
+	static async set(location) {
 		try {
 			const editLocation = await Location.findByIdAndUpdate(
-				_location._id,
-				_location,
+				location._id,
+				location,
 				{
 					new: true,
 				}
@@ -18,23 +18,24 @@ class LocationController {
 			console.log(err);
 		}
 	}
-	static async addLocation(_location) {
+	static async addLocation(location) {
+		const { name, address, formattedAddress, gpsLocation, event } = location;
 		return await LocationController.add(
-			_location.name,
-			_location.address,
-			_location.formattedAddress,
-			_location.gpsLocation,
-			_location.event
+			name,
+			address,
+			formattedAddress,
+			gpsLocation,
+			event
 		);
 	}
-	static async add(_name, _address, _formattedAddress, _gpsLocation, _event) {
+	static async add(name, address, formattedAddress, gpsLocation, event) {
 		try {
 			const newLocation = await Location.create({
-				name: _name,
-				address: _address,
-				formattedAddress: _formattedAddress,
-				gpsLocation: _gpsLocation,
-				event: _event,
+				name,
+				address,
+				formattedAddress,
+				gpsLocation,
+				event,
 			});
 			return newLocation;
 		} catch (err) {
@@ -42,15 +43,15 @@ class LocationController {
 		}
 	}
 
-	static async delete(_id) {
-		const delLocation = await Location.findByIdAndRemove(_id);
+	static async delete(id) {
+		const delLocation = await Location.findByIdAndRemove(id);
 		return delLocation;
 	}
 	static async list(filter) {
 		return await Location.find(filter);
 	}
-	static async listByEvent(_event) {
-		const filter = { event: _event };
+	static async listByEvent(event) {
+		const filter = { event };
 		return await LocationController.list(filter);
 	}
 }

@@ -1,18 +1,22 @@
 const User = require('../models/user.model');
 const mongoose = require('mongoose');
 class UserController {
-	static async get(_id) {
+	static async get(id) {
 		return await User.findById(_id);
 	}
-	static async set(_user) {
+	static async set(user) {
 		try {
-			const editUser = await User.findByIdAndUpdate(_user._id, _user, {
+			const editUser = await User.findByIdAndUpdate(user._id, user, {
 				new: true,
 			});
 			return editUser;
 		} catch (err) {
 			console.log(err);
 		}
+	}
+	static async addUser(user) {
+		const { username, name, email, password } = user;
+		return await UserController.add(username, name, email, password);
 	}
 	static async add(username, name, email, password) {
 		try {
@@ -22,11 +26,11 @@ class UserController {
 			throw err;
 		}
 	}
-	static async setImage(_id, _imagePath) {
+	static async setImage(id, image) {
 		try {
 			const editUser = await User.findByIdAndUpdate(
-				_id,
-				{ image: _imagePath },
+				id,
+				{ image },
 				{
 					new: true,
 				}
@@ -36,35 +40,35 @@ class UserController {
 			throw err;
 		}
 	}
-	static async delete(_id) {
-		const delUser = await User.findByIdAndRemove(_id);
+	static async delete(id) {
+		const delUser = await User.findByIdAndRemove(id);
 		return delUser;
 	}
 	static async list() {
 		return await User.find();
 	}
-	static async findByEmail(_email) {
-		return await User.findOne({ email: _email });
+	static async findByEmail(email) {
+		return await User.findOne({ email });
 	}
-	static async findByUsername(_username) {
-		return await User.findOne({ username: _username });
+	static async findByUsername(username) {
+		return await User.findOne({ username });
 	}
-	static async checkEmail(_email) {
-		return await User.findOne({ email: _email });
+	static async checkEmail(email) {
+		return await User.findOne({ email });
 	}
-	static async checkEmailDifferentUser(_email, _id) {
+	static async checkEmailDifferentUser(email, id) {
 		return await User.findOne({
-			email: { $eq: _email },
-			_id: { $ne: _id },
+			email: { $eq: email },
+			_id: { $ne: id },
 		});
 	}
-	static async checkUsername(_username) {
-		return await User.findOne({ username: _username });
+	static async checkUsername(username) {
+		return await User.findOne({ username });
 	}
-	static async checkUsernameDifferentUser(_username, _id) {
+	static async checkUsernameDifferentUser(username, id) {
 		return await User.findOne({
-			username: { $eq: _username },
-			_id: { $ne: _id },
+			username: { $eq: username },
+			_id: { $ne: id },
 		});
 	}
 }

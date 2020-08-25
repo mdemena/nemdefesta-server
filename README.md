@@ -109,6 +109,7 @@ body:
 body:
     - username
 ```
+
 | Method | URL                  | Description                      |
 | ------ | -------------------- | -------------------------------- |
 | POST   | /api/user/checkemail | Check if email exist in database |
@@ -118,11 +119,24 @@ body:
     - email
 ```
 
-| Method | URL             | Description                                                                                     |
-| ------ | --------------- | ----------------------------------------------------------------------------------------------- |
-| GET    | /api/events/    | Return events list, without params nearest by date. With params for location or GPS Coordinates |
-| GET    | /api/events/:id | Return event details: Event data, activities, comments, etc.                                    |
-| POST   | /api/events/    | Create a new event and return event details: Event data                                         |
+| Method | URL          | Description                            |
+| ------ | ------------ | -------------------------------------- |
+| POST   | /api/events/ | Return events list match filter params |
+
+```
+body:
+    - fromDate
+    - toDate
+    - longitude
+    - lalitude
+    - distance
+    - searchText
+```
+
+| Method | URL              | Description                                                  |
+| ------ | ---------------- | ------------------------------------------------------------ |
+| GET    | /api/events/:id  | Return event details: Event data, activities, comments, etc. |
+| POST   | /api/events/add/ | Create a new event and return event details: Event data      |
 
 ```
 body:
@@ -249,6 +263,7 @@ body:
     - description
     - image
 ```
+
 | Method | URL                      | Description                         |
 | ------ | ------------------------ | ----------------------------------- |
 | PATCH  | /api/activity/like/:id   | Add a like to event                 |
@@ -303,7 +318,7 @@ Event model
 - from: Date
 - to: Date
 - image: String
-- location: 
+- location:
     - name: String
     - address: String
     - formatted_address: String
