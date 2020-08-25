@@ -9,50 +9,50 @@ const timezone = require('dayjs/plugin/timezone');
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-// router.post('/', async (req, res, next) => {
-// 	try {
-// 		let {
-// 			fromDate,
-// 			toDate,
-// 			longitude,
-// 			latitude,
-// 			distance,
-// 			searchText,
-// 		} = req.body;
+router.post('/', async (req, res, next) => {
+	try {
+		let {
+			fromDate,
+			toDate,
+			longitude,
+			latitude,
+			distance,
+			searchText,
+		} = req.body;
 
-// 		if (fromDate) {
-// 			fromDate = dayjs(new Date(fromDate));
-// 		} else {
-// 			fromDate = dayjs();
-// 		}
+		if (fromDate) {
+			fromDate = dayjs(new Date(fromDate));
+		} else {
+			fromDate = dayjs();
+		}
 
-// 		if (toDate) {
-// 			toDate = dayjs(new Date(toDate));
-// 		} else {
-// 			toDate = dayjs(fromDate).add(1, 'month');
-// 		}
+		if (toDate) {
+			toDate = dayjs(new Date(toDate));
+		} else {
+			toDate = dayjs(fromDate).add(1, 'month');
+		}
 
-// 		const events = await EventController.listFiltered(
-// 			fromDate.toDate(),
-// 			toDate.toDate(),
-// 			longitude,
-// 			latitude,
-// 			distance,
-// 			searchText
-// 		);
-// 		res.status(200).json(events);
-// 	} catch (err) {
-// 		res.status(500).json(err);
-// 	}
-// });
-// router.get('/:id', async (req, res, next) => {
-// 	try {
-// 		const user = await EventController.get(req.params.id);
-// 		res.status(200).json(user);
-// 	} catch (err) {
-// 		res.status(500).json(err);
-// 	}
-// });
+		const events = await EventController.listFiltered(
+			fromDate.toDate(),
+			toDate.toDate(),
+			longitude,
+			latitude,
+			distance,
+			searchText
+		);
+		res.status(200).json(events);
+	} catch (err) {
+		res.status(500).json(err);
+	}
+});
+router.get('/:id', async (req, res, next) => {
+	try {
+		const user = await EventController.get(req.params.id);
+		res.status(200).json(user);
+	} catch (err) {
+		res.status(500).json(err);
+	}
+});
 router.post(
 	'/add',
 	uploadCloud.single('imageEvent'),

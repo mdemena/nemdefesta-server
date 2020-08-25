@@ -2,7 +2,7 @@ const User = require('../models/user.model');
 const mongoose = require('mongoose');
 class UserController {
 	static async get(id) {
-		return await User.findById(_id);
+		return await User.findById(id);
 	}
 	static async set(user) {
 		try {
