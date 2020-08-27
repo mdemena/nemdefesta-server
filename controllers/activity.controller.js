@@ -1,10 +1,9 @@
-const Event = require('../models/event.model');
+const Activity = require('../models/activity.model');
+const EventController = require('../controllers/event.controller');
 const mongoose = require('mongoose');
-class EventController {
+class ActivityController {
 	static async get(id) {
-		return await Event.findById(id).populate([
-			'locations',
-			'activities',
+		return await Activity.findById(id).populate([
 			'likes',
 			'unlikes',
 			'attendees',
@@ -12,25 +11,21 @@ class EventController {
 			'images',
 		]);
 	}
-	static async set(event) {
+	static async set(activity) {
 		try {
-			const editEvent = await Event.findByIdAndUpdate(event._id, event, {
-				new: true,
-			}).populate([
-				'locations',
-				'activities',
-				'likes',
-				'unlikes',
-				'attendees',
-				'comments',
-				'images',
-			]);
-			return editEvent;
+			const editActivity = await Activity.findByIdAndUpdate(
+				activity._id,
+				activity,
+				{
+					new: true,
+				}
+			).populate(['likes', 'unlikes', 'attendees', 'comments', 'images']);
+			return editActivity;
 		} catch (err) {
 			console.log(err);
 		}
 	}
-	static async addEvent(event) {
+	static async addActivity(activity) {
 		const {
 			name,
 			description,
@@ -38,36 +33,47 @@ class EventController {
 			toDate,
 			image,
 			location,
+			event,
 			user,
-		} = event;
-		return await EventController.add(
+		} = activity;
+		return await ActivityController.add(
 			name,
 			description,
 			fromDate,
 			toDate,
 			image,
 			location,
+			event,
 			user
 		);
 	}
-	static async add(name, description, fromDate, toDate, image, location, user) {
-		const newEvent = await Event.create({
+	static async add(
+		name,
+		description,
+		fromDate,
+		toDate,
+		image,
+		location,
+		event,
+		user
+	) {
+		const newActivity = await Activity.create({
 			name,
 			description,
 			fromDate,
 			toDate,
 			image,
 			location,
-			locations: [],
-			activities: [],
 			likes: [],
 			unlikes: [],
 			attendees: [],
 			comments: [],
 			images: [],
+			event,
 			user,
 		});
-		return newEvent;
+		EventController.addRemoveActivity(event, newActivity._id);
+		return newActivity;
 	}
 	static async setImage(id, imagePath) {
 		try {
@@ -77,47 +83,15 @@ class EventController {
 				{
 					new: true,
 				}
-			).populate([
-				'locations',
-				'activities',
-				'likes',
-				'unlikes',
-				'attendees',
-				'comments',
-				'images',
-			]);
+			).populate(['likes', 'unlikes', 'attendees', 'comments', 'images']);
 			return editEvent;
-		} catch (err) {
-			throw err;
-		}
-	}
-	static async addRemoveLocation(id, location) {
-		try {
-			return await EventController.manageSubscriptions(
-				id,
-				location,
-				'locations',
-				null
-			);
-		} catch (err) {
-			throw err;
-		}
-	}
-	static async addRemoveActivity(id, activity) {
-		try {
-			return await EventController.manageSubscriptions(
-				id,
-				activity,
-				'activities',
-				null
-			);
 		} catch (err) {
 			throw err;
 		}
 	}
 	static async addRemoveLike(id, user) {
 		try {
-			return await EventController.manageSubscriptions(
+			return await ActivityController.manageSubscriptions(
 				id,
 				user,
 				'likes',
@@ -129,7 +103,7 @@ class EventController {
 	}
 	static async addRemoveUnlike(id, user) {
 		try {
-			return await EventController.manageSubscriptions(
+			return await ActivityController.manageSubscriptions(
 				id,
 				user,
 				'unlikes',
@@ -141,7 +115,7 @@ class EventController {
 	}
 	static async addRemoveAttendee(id, user) {
 		try {
-			return await EventController.manageSubscriptions(
+			return await ActivityController.manageSubscriptions(
 				id,
 				user,
 				'attendees',
@@ -153,7 +127,7 @@ class EventController {
 	}
 	static async addRemoveComment(id, comment) {
 		try {
-			return await EventController.manageSubscriptions(
+			return await ActivityController.manageSubscriptions(
 				id,
 				comment,
 				'comments',
@@ -165,7 +139,7 @@ class EventController {
 	}
 	static async addRemoveImage(id, image) {
 		try {
-			return await EventController.manageSubscriptions(
+			return await ActivityController.manageSubscriptions(
 				id,
 				image,
 				'images',
@@ -176,38 +150,35 @@ class EventController {
 		}
 	}
 	static async manageSubscriptions(id, document, array, contraArray) {
-		try {
-			const editEvent = await Event.findById(id);
-			if (editEvent) {
-				if (!editEvent[array].includes(document)) {
-					editEvent[array].push(document);
-					if (contraArray) {
-						const contraIndex = editEvent[contraArray].findIndex((doc) =>
-							doc.equals(document)
-						);
-						if (contraIndex >= 0) {
-							editEvent[contraArray].splice(contraIndex, 1);
-						}
-					}
-				} else {
-					const delIndex = editEvent[array].findIndex((doc) =>
+		const editActivity = await Activity.findById(id);
+		if (editActivity) {
+			if (!editActivity[array].includes(document)) {
+				editActivity[array].push(document);
+				if (contraArray) {
+					const contraIndex = editActivity[contraArray].findIndex((doc) =>
 						doc.equals(document)
 					);
-					if (delIndex >= 0) {
-						editEvent[array].splice(delIndex, 1);
+					if (contraIndex >= 0) {
+						editActivity[contraArray].splice(contraIndex, 1);
 					}
 				}
+			} else {
+				const delIndex = editActivity[array].findIndex((doc) =>
+					doc.equals(document)
+				);
+				if (delIndex >= 0) {
+					editActivity[array].splice(delIndex, 1);
+				}
 			}
-			await editEvent.save();
-			return await EventController.get(editEvent.id);
-		} catch (err) {
-			throw err;
 		}
+		await editActivity.save();
+		return await ActivityController.get(editActivity.id);
 	}
 
 	static async delete(id) {
-		const delEvent = await Event.findByIdAndRemove(id);
-		return delEvent;
+		const delActivity = await Activity.findByIdAndRemove(id);
+		EventController.addRemoveActivity(delActivity.event, delActivity._id);
+		return delActivity;
 	}
 	static async listFiltered(
 		fromDate,
@@ -242,15 +213,14 @@ class EventController {
 				},
 			};
 		}
-		return await EventController.list(filter);
+		return await ActivityController.list(filter);
 	}
 	static async list(filter) {
-		console.log('Filter: ', filter);
-		return await Event.find(filter);
+		return await Activity.find(filter);
 	}
 	static async listByUser(user) {
 		const filter = { user: user };
-		return await EventController.list(filter);
+		return await ActivityController.list(filter);
 	}
 }
-module.exports = EventController;
+module.exports = ActivityController;

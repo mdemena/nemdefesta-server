@@ -1,4 +1,6 @@
 const Image = require('../models/image.model');
+const EventController = require('../controllers/event.controller');
+const ActivityController = require('../controllers/activity.controller');
 const mongoose = require('mongoose');
 class ImageController {
 	static async get(id) {
@@ -15,31 +17,58 @@ class ImageController {
 		}
 	}
 	static async addImage(_image) {
-		const { title, description, image, user } = _image;
-		return await ImageController.add(title, description, image, user);
+		const { title, description, image, activity, event, user } = _image;
+		return await ImageController.add(
+			title,
+			description,
+			image,
+			activity,
+			event,
+			user
+		);
 	}
-	static async add(title, description, image, user) {
-		try {
-			const newImage = await Image.create({
-				title,
-				description,
-				image,
-				user,
-				likes: [],
-				unlikes: [],
-			});
-			return newImage;
-		} catch (err) {
-			throw err;
+	static async add(title, description, image, activity, event, user) {
+		const newImage = await Image.create({
+			title,
+			description,
+			image,
+			user,
+			likes: [],
+			unlikes: [],
+		});
+		if (event) {
+			EventController.addRemoveImage(event, newImage._id);
 		}
+		if (activity) {
+			ActivityController.addRemoveImage(activity, newImage._id);
+		}
+		return newImage;
 	}
 
 	static async delete(id) {
 		const delImage = await Image.findByIdAndRemove(id);
+		if (delImage.event) {
+			EventController.addRemoveImage(delImage.event, delImage._id);
+		}
+		if (delImage.activity) {
+			ActivityController.addRemoveImage(delImage.activity, delImage._id);
+		}
 		return delImage;
 	}
 	static async list(filter) {
 		return await Image.find(filter);
+	}
+	static async listByUser(user) {
+		const filter = { user };
+		return await ImageController.list(filter);
+	}
+	static async listByEvent(event) {
+		const filter = { event };
+		return await ImageController.list(filter);
+	}
+	static async listByActivity(activity) {
+		const filter = { activity };
+		return await ImageController.list(filter);
 	}
 }
 module.exports = ImageController;
