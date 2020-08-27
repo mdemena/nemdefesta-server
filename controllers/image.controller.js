@@ -18,29 +18,35 @@ class ImageController {
 	}
 	static async addImage(_image) {
 		const { title, description, image, event, activity, user } = _image;
+		console.log(title, description, image, event, activity, user);
+		console.log(_image);
+
 		return await ImageController.add(
 			title,
 			description,
 			image,
-			activity,
 			event,
+			activity,
 			user
 		);
 	}
 	static async add(title, description, image, event, activity, user) {
+		console.log(title, description, image, event, activity, user);
 		const newImage = await Image.create({
 			title,
 			description,
 			image,
+			event,
+			activity,
 			user,
 			likes: [],
 			unlikes: [],
 		});
 		if (event) {
-			EventController.addRemoveImage(event, newImage._id);
+			await EventController.addRemoveImage(event, newImage._id);
 		}
 		if (activity) {
-			ActivityController.addRemoveImage(activity, newImage._id);
+			await ActivityController.addRemoveImage(activity, newImage._id);
 		}
 		return newImage;
 	}
@@ -48,10 +54,10 @@ class ImageController {
 	static async delete(id) {
 		const delImage = await Image.findByIdAndRemove(id);
 		if (delImage.event) {
-			EventController.addRemoveImage(delImage.event, delImage._id);
+			await EventController.addRemoveImage(delImage.event, delImage._id);
 		}
 		if (delImage.activity) {
-			ActivityController.addRemoveImage(delImage.activity, delImage._id);
+			await ActivityController.addRemoveImage(delImage.activity, delImage._id);
 		}
 		return delImage;
 	}

@@ -77,14 +77,14 @@ class ActivityController {
 	}
 	static async setImage(id, imagePath) {
 		try {
-			const editEvent = await Event.findByIdAndUpdate(
+			const editActivity = await Activity.findByIdAndUpdate(
 				id,
 				{ image: imagePath },
 				{
 					new: true,
 				}
 			).populate(['likes', 'unlikes', 'attendees', 'comments', 'images']);
-			return editEvent;
+			return editActivity;
 		} catch (err) {
 			throw err;
 		}
@@ -218,8 +218,12 @@ class ActivityController {
 	static async list(filter) {
 		return await Activity.find(filter);
 	}
+	static async listByEvent(event) {
+		const filter = { event };
+		return await ActivityController.list(filter);
+	}
 	static async listByUser(user) {
-		const filter = { user: user };
+		const filter = { user };
 		return await ActivityController.list(filter);
 	}
 }

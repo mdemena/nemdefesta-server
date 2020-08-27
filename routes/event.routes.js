@@ -221,12 +221,13 @@ router.patch(
 					title,
 					description,
 					event: req.params.id,
+					user: req.user._id,
 				};
 				if (req.file) {
 					image['image'] = req.file.path;
 				}
 				const newImage = await ImageController.add(image);
-				res.status(200).json(EventController.get(req.params.id));
+				res.status(200).json(await EventController.get(req.params.id));
 			} catch (err) {
 				res.status(500).json(err);
 			}

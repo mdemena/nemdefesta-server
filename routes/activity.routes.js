@@ -9,10 +9,38 @@ const timezone = require('dayjs/plugin/timezone');
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-router.get('/', async (req, res, next) => {
+router.post('/', async (req, res, next) => {
 	try {
-		const activities = await ActivityController.list();
-		res.status(200).json(activities);
+		let {
+			fromDate,
+			toDate,
+			longitude,
+			latitude,
+			distance,
+			searchText,
+		} = req.body;
+
+		if (fromDate) {
+			fromDate = dayjs(new Date(fromDate));
+		} else {
+			fromDate = dayjs();
+		}
+
+		if (toDate) {
+			toDate = dayjs(new Date(toDate));
+		} else {
+			toDate = dayjs(fromDate).add(1, 'month');
+		}
+
+		const events = await ActivityController.listFiltered(
+			fromDate.toDate(),
+			toDate.toDate(),
+			longitude,
+			latitude,
+			distance,
+			searchText
+		);
+		res.status(200).json(events);
 	} catch (err) {
 		res.status(500).json(err);
 	}
@@ -20,7 +48,7 @@ router.get('/', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
 	try {
 		const activity = await ActivityController.get(req.params.id);
-		res.status(200).json(location);
+		res.status(200).json(activity);
 	} catch (err) {
 		res.status(500).json(err);
 	}
@@ -34,7 +62,7 @@ router.get('/event/:id', async (req, res, next) => {
 	}
 });
 router.post(
-	'/:id',
+	'/add/:id',
 	uploadCloud.single('imageActivity'),
 	async (req, res, next) => {
 		if (req.isAuthenticated()) {
@@ -47,6 +75,7 @@ router.post(
 					toDate,
 					location,
 					event: req.params.id,
+					user: req.user._id,
 				};
 				if (req.file) {
 					activity['image'] = req.file.path;
@@ -82,7 +111,7 @@ router.put(
 
 			const editActivity = await ActivityController.set(activity);
 
-			res.status(200).json(editLocation);
+			res.status(200).json(editActivity);
 		} else {
 			res.status(500).json({ message: 'No estàs autenticat' });
 		}
@@ -166,12 +195,13 @@ router.patch(
 					title,
 					description,
 					activity: req.params.id,
+					user: req.user._id,
 				};
 				if (req.file) {
 					image['image'] = req.file.path;
 				}
-				const newImage = await ImageController.add(image);
-				res.status(200).json(ActivityController.get(req.params.id));
+				const newImage = await ImageController.addImage(image);
+				res.status(200).json(await ActivityController.get(req.params.id));
 			} catch (err) {
 				res.status(500).json(err);
 			}

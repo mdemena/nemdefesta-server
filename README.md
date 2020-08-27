@@ -216,11 +216,24 @@ body:
     - lng
 ```
 
+| Method | URL              | Description                                |
+| ------ | ---------------- | ------------------------------------------ |
+| POST   | /api/activities/ | Return activities list match filter params |
+```
+body:
+    - fromDate
+    - toDate
+    - longitude
+    - lalitude
+    - distance
+    - searchText
+```
+
 | Method | URL                       | Description                                                                 |
 | ------ | ------------------------- | --------------------------------------------------------------------------- |
 | GET    | /api/activities/event/:id | Return activities list from an eventid put in params.                       |
 | GET    | /api/activities/:id       | Return activity details: Activity data, comments, etc.                      |
-| POST   | /api/activities/:id       | Create a new activity in a event and return activity details: Activity data |
+| POST   | /api/activities/add/:id   | Create a new activity in a event and return activity details: Activity data |
 
 ```
 body:
