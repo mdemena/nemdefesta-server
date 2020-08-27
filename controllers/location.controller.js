@@ -1,4 +1,5 @@
 const Location = require('../models/location.model');
+const EventController = require('../controllers/event.controller');
 const mongoose = require('mongoose');
 class LocationController {
 	static async get(id) {
@@ -37,6 +38,7 @@ class LocationController {
 				gpsLocation,
 				event,
 			});
+			EventController.addRemoveLocation(event, newLocation._id);
 			return newLocation;
 		} catch (err) {
 			throw err;

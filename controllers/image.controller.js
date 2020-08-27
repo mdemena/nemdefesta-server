@@ -17,7 +17,7 @@ class ImageController {
 		}
 	}
 	static async addImage(_image) {
-		const { title, description, image, activity, event, user } = _image;
+		const { title, description, image, event, activity, user } = _image;
 		return await ImageController.add(
 			title,
 			description,
@@ -27,7 +27,7 @@ class ImageController {
 			user
 		);
 	}
-	static async add(title, description, image, activity, event, user) {
+	static async add(title, description, image, event, activity, user) {
 		const newImage = await Image.create({
 			title,
 			description,

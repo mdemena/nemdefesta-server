@@ -6,6 +6,7 @@ const uploadCloud = require('../configs/cloudinary.config.js');
 const dayjs = require('dayjs');
 const utc = require('dayjs/plugin/utc'); // dependent on utc plugin
 const timezone = require('dayjs/plugin/timezone');
+const ActivityController = require('../controllers/activity.controller');
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
@@ -86,16 +87,16 @@ router.post(
 				user: req.user._id,
 			};
 
-			// try {
-			if (req.file) {
-				event['image'] = req.file.path;
-			}
-			const newEvent = await EventController.addEvent(event);
+			try {
+				if (req.file) {
+					event['image'] = req.file.path;
+				}
+				const newEvent = await EventController.addEvent(event);
 
-			res.status(200).json(newEvent);
-			// } catch (err) {
-			// 	res.status(500).json(err);
-			// }
+				res.status(200).json(newEvent);
+			} catch (err) {
+				res.status(500).json(err);
+			}
 		} else {
 			res.status(500).json({ message: 'No estàs autenticat' });
 		}
@@ -219,16 +220,13 @@ router.patch(
 				const image = {
 					title,
 					description,
+					event: req.params.id,
 				};
 				if (req.file) {
 					image['image'] = req.file.path;
 				}
 				const newImage = await ImageController.add(image);
-				const editEvent = await EventController.addRemoveImage(
-					req.params.id,
-					newImage._id
-				);
-				res.status(200).json(editEvent);
+				res.status(200).json(EventController.get(req.params.id));
 			} catch (err) {
 				res.status(500).json(err);
 			}
@@ -237,4 +235,17 @@ router.patch(
 		}
 	}
 );
+router.delete('/:id', async (req, res, next) => {
+	try {
+		if (req.isAuthenticated) {
+			const user = await EventController.get(req.params.id);
+			res.status(200).json(user);
+		} else {
+			res.status(500).json({ message: 'No estàs autenticat' });
+		}
+	} catch (err) {
+		res.status(500).json(err);
+	}
+});
+
 module.exports = router;

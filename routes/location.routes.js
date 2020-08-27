@@ -18,22 +18,29 @@ router.get('/:id', async (req, res, next) => {
 		res.status(500).json(err);
 	}
 });
+router.get('/event/:id', async (req, res, next) => {
+	try {
+		const locations = await LocationController.listByEvent(req.params.id);
+		res.status(200).json(locations);
+	} catch (err) {
+		res.status(500).json(err);
+	}
+});
 router.post('/', async (req, res, next) => {
-	const {
-		name,
-		address,
-		formattedAddress,
-		longitude,
-		latitude,
-		eventId,
-	} = req.body;
-
 	if (req.isAuthenticated()) {
+		const {
+			name,
+			address,
+			formattedAddress,
+			longitude,
+			latitude,
+			eventId,
+		} = req.body;
 		try {
 			const location = {
-				name: name,
-				address: address,
-				formattedAddress: formattedAddress,
+				name,
+				address,
+				formattedAddress,
 				gpsLocation: {
 					coordinates: [longitude, latitude],
 				},
@@ -51,14 +58,13 @@ router.post('/', async (req, res, next) => {
 	}
 });
 router.put('/:id', async (req, res, next) => {
-	const { name, address, formattedAddress, longitude, latitude } = req.body;
-
 	if (req.isAuthenticated()) {
+		const { name, address, formattedAddress, longitude, latitude } = req.body;
 		const location = {
 			_id: req.params.id,
-			name: name,
-			address: address,
-			formattedAddress: formattedAddress,
+			name,
+			address,
+			formattedAddress,
 			gpsLocation: {
 				coordinates: [longitude, latitude],
 			},
@@ -71,5 +77,16 @@ router.put('/:id', async (req, res, next) => {
 		res.status(500).json({ message: 'No estàs autenticat' });
 	}
 });
-
+router.delete('/:id', async (req, res, next) => {
+	try {
+		if (req.isAuthenticated) {
+			const delLocation = await LocationController.delete(req.params.id);
+			res.status(200).json(delLocation);
+		} else {
+			res.status(500).json({ message: 'No estàs autenticat' });
+		}
+	} catch (err) {
+		res.status(500).json(err);
+	}
+});
 module.exports = router;

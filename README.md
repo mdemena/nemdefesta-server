@@ -187,7 +187,9 @@ body:
 | PATCH  | /api/events/like/:id     | Add a like to event                                                          |
 | PATCH  | /api/events/unlike/:id   | Add a unlike to event                                                        |
 | PATCH  | /api/events/attendee/:id | Add an user to event assist list                                             |
+| GET    | /api/locations/          | Return a location list.                                                      |
 | GET    | /api/locations/:id       | Return location details: Location data, etc.                                 |
+| GET    | /api/locations/event/:id | Return a loaction list for an Event.                                         |
 | POST   | /api/locations/          | Create a new location event and return location event details: Location data |
 
 ```
