@@ -15,14 +15,19 @@ const eventSchema = new mongoose.Schema(
 		location: {
 			name: { type: String, required: true },
 			address: { type: String, required: true },
-			formatted_address: { type: String },
+			formattedAddress: { type: String },
 			gpsLocation: {
 				type: { type: String, default: 'Point' },
 				coordinates: [{ type: Number }],
 			},
 		},
-		likes: { type: Number, default: 0 },
-		assistants: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+		locations: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Location' }],
+		activities: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Activity' }],
+		likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+		unlikes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+		attendees: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+		comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
+		images: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Image' }],
 		user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
 	},
 	{ timestamps: true }

@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
 
-const commentSchema = new mongoose.Schema(
+const imageSchema = new mongoose.Schema(
 	{
-		title: { type: String, required: true },
-		description: { type: String, required: true },
+		title: { type: String },
+		description: { type: String },
+		image: { type: String, required: true },
 		likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
 		unlikes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
 		event: { type: mongoose.Schema.Types.ObjectId, ref: 'Event' },
@@ -13,6 +14,6 @@ const commentSchema = new mongoose.Schema(
 	{ timestamps: true }
 );
 
-const Comment = mongoose.model('Comment', commentSchema);
+const Image = mongoose.model('Image', imageSchema);
 
-module.exports = Comment;
+module.exports = Image;

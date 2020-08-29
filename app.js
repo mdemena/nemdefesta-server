@@ -47,25 +47,37 @@ app.use(passport.session());
 app.use(
 	cors({
 		credentials: true,
-		origin: ['*'], // <== aceptar llamadas desde este dominio
+		origin: process.env.CORS_DOMAINS, // <== aceptar llamadas desde este dominio
 	})
 );
 
 // default value for title local
 app.locals.title =
-	'Nem De Festa !! - Estigues al dia de les festes majors del teu voltant';
+	'API - Nem De Festa !! - Estigues al dia de les festes majors del teu voltant';
 
 const index = require('./routes/index.routes');
 app.use('/', index);
 
-const auth = require('./routes/auth.routes');
-app.use('/api/auth', auth);
+const authRoute = require('./routes/auth.routes');
+app.use('/api/auth', authRoute);
 
-const user = require('./routes/user.routes');
-app.use('/api/users', user);
+const userRoute = require('./routes/user.routes');
+app.use('/api/users', userRoute);
 
-const event = require('./routes/event.routes');
-app.use('/api/events', event);
+const eventRoute = require('./routes/event.routes');
+app.use('/api/events', eventRoute);
+
+const locationRoute = require('./routes/location.routes');
+app.use('/api/locations', locationRoute);
+
+const activityRoute = require('./routes/activity.routes');
+app.use('/api/activities', activityRoute);
+
+const commentRoute = require('./routes/comment.routes');
+app.use('/api/comments', commentRoute);
+
+const imageRoute = require('./routes/image.routes');
+app.use('/api/images', imageRoute);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
@@ -77,12 +89,13 @@ app.use((req, res, next) => {
 // error handler
 app.use((err, req, res, next) => {
 	// set locals, only providing error in development
+	console.log(err);
 	res.locals.message = err.message;
 	res.locals.error = req.app.get('env') === 'development' ? err : {};
 
 	// render the error page
 	res.status(err.status || 500);
-	res.send('error');
+	res.send('ERROR EN APP');
 });
 
 module.exports = app;

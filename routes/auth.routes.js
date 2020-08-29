@@ -17,10 +17,9 @@ router.post('/login', (req, res, next) => {
 			res.status(401).json(failureDetails);
 			return;
 		}
-
 		req.login(user, (loginErr) => {
 			if (loginErr) {
-				res.status(500).json({ message: `Sessió no grabda correctament` });
+				res.status(500).json({ message: `Sessió no grabada correctament` });
 				return;
 			}
 			res.status(200).json(user);
