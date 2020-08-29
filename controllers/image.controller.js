@@ -58,6 +58,55 @@ class ImageController {
 		}
 		return delImage;
 	}
+	static async addRemoveLike(id, user) {
+		try {
+			return await ImageController.manageSubscriptions(
+				id,
+				user,
+				'likes',
+				'unlikes'
+			);
+		} catch (err) {
+			throw err;
+		}
+	}
+	static async addRemoveUnlike(id, user) {
+		try {
+			return await ImageController.manageSubscriptions(
+				id,
+				user,
+				'unlikes',
+				'likes'
+			);
+		} catch (err) {
+			throw err;
+		}
+	}
+	static async manageSubscriptions(id, document, array, contraArray) {
+		const editImage = await Image.findById(id);
+		if (editImage) {
+			if (!editImage[array].includes(document)) {
+				editImage[array].push(document);
+				if (contraArray) {
+					const contraIndex = editImage[contraArray].findIndex((doc) =>
+						doc.equals(document)
+					);
+					if (contraIndex >= 0) {
+						editImage[contraArray].splice(contraIndex, 1);
+					}
+				}
+			} else {
+				const delIndex = editImage[array].findIndex((doc) =>
+					doc.equals(document)
+				);
+				if (delIndex >= 0) {
+					editImage[array].splice(delIndex, 1);
+				}
+			}
+		}
+		await editImage.save();
+		return await ImageController.get(editImage.id);
+	}
 	static async list(filter) {
 		return await Image.find(filter);
 	}

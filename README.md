@@ -61,7 +61,6 @@ Push Notifications:
 | Method | URL             | Description                        |
 | ------ | --------------- | ---------------------------------- |
 | POST   | /api/auth/login | Return User data if user logged in |
-
 ```
 body:
     - email
@@ -72,7 +71,6 @@ body:
 | ------ | ---------------- | ----------------------------------------------- |
 | POST   | /api/auth/logout | Logout.                                         |
 | POST   | /api/auth/signup | Add user and return user data if user signup in |
-
 ```
 body:
     - email
@@ -85,7 +83,6 @@ body:
 | GET    | /api/user/ | Return User data      |
 | DELETE | /api/user/ | Delete User           |
 | PUT    | /api/user/ | Update User data info |
-
 ```
 body:
     - email
@@ -95,7 +92,6 @@ body:
 | Method | URL              | Description       |
 | ------ | ---------------- | ----------------- |
 | PATCH  | /api/user/upload | Update User image |
-
 ```
 body:
     - image
@@ -104,7 +100,6 @@ body:
 | Method | URL                     | Description                         |
 | ------ | ----------------------- | ----------------------------------- |
 | POST   | /api/user/checkusername | Check if username exist in database |
-
 ```
 body:
     - username
@@ -113,7 +108,6 @@ body:
 | Method | URL                  | Description                      |
 | ------ | -------------------- | -------------------------------- |
 | POST   | /api/user/checkemail | Check if email exist in database |
-
 ```
 body:
     - email
@@ -122,7 +116,6 @@ body:
 | Method | URL          | Description                            |
 | ------ | ------------ | -------------------------------------- |
 | POST   | /api/events/ | Return events list match filter params |
-
 ```
 body:
     - fromDate
@@ -137,7 +130,6 @@ body:
 | ------ | ---------------- | ------------------------------------------------------------ |
 | GET    | /api/events/:id  | Return event details: Event data, activities, comments, etc. |
 | POST   | /api/events/add/ | Create a new event and return event details: Event data      |
-
 ```
 body:
     - name
@@ -152,7 +144,6 @@ body:
 | ------ | --------------- | ------------------------------------------------------------------------ |
 | DELETE | /api/events/:id | Delete event and all info related, then return event details: Event data |
 | PUT    | /api/events/:id | Update event info and return event details: Event data                   |
-
 ```
 body:
     - name
@@ -165,7 +156,6 @@ body:
 | Method | URL                    | Description        |
 | ------ | ---------------------- | ------------------ |
 | PATCH  | /api/events/upload/:id | Update event image |
-
 ```
 body:
     - image
@@ -174,7 +164,6 @@ body:
 | Method | URL                   | Description                             |
 | ------ | --------------------- | --------------------------------------- |
 | PATCH  | /api/events/image/:id | Add an image to image list for an event |
-
 ```
 body:
     - title
@@ -191,7 +180,6 @@ body:
 | GET    | /api/locations/:id       | Return location details: Location data, etc.                                 |
 | GET    | /api/locations/event/:id | Return a loaction list for an Event.                                         |
 | POST   | /api/locations/          | Create a new location event and return location event details: Location data |
-
 ```
 body:
     - name
@@ -206,7 +194,6 @@ body:
 | ------ | ------------------ | --------------------------------------------------------------- |
 | DELETE | /api/locations/:id | Delete location, then return location details: Location data    |
 | PUT    | /api/locations/:id | Update location info and return location details: Location data |
-
 ```
 body:
     - name
@@ -234,7 +221,6 @@ body:
 | GET    | /api/activities/event/:id | Return activities list from an eventid put in params.                       |
 | GET    | /api/activities/:id       | Return activity details: Activity data, comments, etc.                      |
 | POST   | /api/activities/add/:id   | Create a new activity in a event and return activity details: Activity data |
-
 ```
 body:
     - name
@@ -249,7 +235,6 @@ body:
 | ------ | ------------------- | --------------------------------------------------------------------------------- |
 | DELETE | /api/activities/:id | Delete activity and all info related, then return activity details: Activity data |
 | PUT    | /api/activities/:id | Update activity info and return activity details: Activity data                   |
-
 ```
 body:
     - name
@@ -262,7 +247,6 @@ body:
 | Method | URL                      | Description           |
 | ------ | ------------------------ | --------------------- |
 | PATCH  | /api/activity/upload/:id | Update activity image |
-
 ```
 body:
     - image
@@ -271,7 +255,6 @@ body:
 | Method | URL                     | Description                                |
 | ------ | ----------------------- | ------------------------------------------ |
 | PATCH  | /api/activity/image/:id | Add an image to image list for an activity |
-
 ```
 body:
     - title
@@ -292,30 +275,56 @@ body:
 | GET    | /api/comments/activity/:id | Return comments list from an activity.                                                |
 | GET    | /api/comments/:id          | Return comment details: Comment data, likes, etc.                                     |
 | POST   | /api/comments/:id          | Create a new activity in a event or activity and return comment details: Comment data |
-
 ```
 body:
     - title
     - description
+    - event
+    - activity
 ```
 
 | Method | URL               | Description                                                   |
 | ------ | ----------------- | ------------------------------------------------------------- |
 | DELETE | /api/comments/:id | Delete comment, then return comments details: Comments data   |
 | PUT    | /api/comments/:id | Update comments info and return comment details: Comment data |
-
 ```
 body:
     - title
     - description
 ```
 
-| Method | URL                     | Description              |
-| ------ | ----------------------- | ------------------------ |
-| PATCH  | /api/comment/like/:id   | Add a like to comment    |
-| PATCH  | /api/comment/unlike/:id | Add an unlike to comment |
-| PATCH  | /api/image/like/:id     | Add a like to image      |
-| PATCH  | /api/image/unlike/:id   | Add an unlike to image   |
+| Method | URL                      | Description                                                                        |
+| ------ | ------------------------ | ---------------------------------------------------------------------------------- |
+| PATCH  | /api/comment/like/:id    | Add a like to comment                                                              |
+| PATCH  | /api/comment/unlike/:id  | Add an unlike to comment                                                           |
+| GET    | /api/images              | Return images list.                                                                |
+| GET    | /api/images/event/:id    | Return images list from an event.                                                  |
+| GET    | /api/images/activity/:id | Return images list from an activity.                                               |
+| GET    | /api/images/:id          | Return image details: Image data, likes, etc.                                      |
+| POST   | /api/images/:id          | Create a new image in a event or activity and return comment details: Comment data |
+```
+body:
+    - title
+    - description
+    - image
+    - event
+    - activity
+```
+
+| Method | URL             | Description                                            |
+| ------ | --------------- | ------------------------------------------------------ |
+| DELETE | /api/images/:id | Delete image, then return imge details: Image data     |
+| PUT    | /api/images/:id | Update image info and return image details: Image data |
+```
+body:
+    - title
+    - description
+```
+
+| Method | URL                   | Description            |
+| ------ | --------------------- | ---------------------- |
+| PATCH  | /api/image/like/:id   | Add a like to image    |
+| PATCH  | /api/image/unlike/:id | Add an unlike to image |
 
 ## Models
 
@@ -383,8 +392,10 @@ Comment model
 - title: String
 - description: String
 - likes: Array of User id,
-- unlikes: Array of User id,
-- user: User Id,
+- unlikes: Array of User id
+- event: Event Id
+- activity: Activity Id
+- user: User Id
 ```
 
 ```
@@ -392,9 +403,11 @@ Image model
 - title: String
 - description: String
 - image: String
-- likes: Array of User id,
-- unlikes: Array of User id,
-- user: User Id,
+- likes: Array of User id
+- unlikes: Array of User id
+- event: Event Id
+- activity: Activity Id
+- user: User Id
 ```
 
 ## Links

@@ -73,8 +73,11 @@ app.use('/api/locations', locationRoute);
 const activityRoute = require('./routes/activity.routes');
 app.use('/api/activities', activityRoute);
 
-const copmmentRoute = require('./routes/comment.routes');
-app.use('/api/comments', copmmentRoute);
+const commentRoute = require('./routes/comment.routes');
+app.use('/api/comments', commentRoute);
+
+const imageRoute = require('./routes/image.routes');
+app.use('/api/images', imageRoute);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
