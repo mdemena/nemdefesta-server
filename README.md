@@ -412,12 +412,22 @@ Image model
 
 ## Links
 
+## Links
+
 ### Wireframes
 
 [Wireframes](https://excalidraw.com/#json=6310275766550528,jC9GmdLS5-t-SHJT2pUBkw)
+
+### Notion
+
+[Notion Scrum Board](https://www.notion.so/mdemena/da39d5bb8fba483eb1eabf75224c91c5?v=53e3d39586de4b6ba4b35b7c6f8efae5)
 
 ### Git
 
 [Repository Link](https://github.com/mdemena/nemdefesta-server)
 
 [Deploy Link]('https://server.nemdefesta.cat/')
+
+### Slides
+
+[Slides Link](http://slides.com)
