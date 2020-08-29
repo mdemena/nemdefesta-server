@@ -1,4 +1,4 @@
-const Comment = require('../models/Comment.model');
+const Comment = require('../models/comment.model');
 const EventController = require('../controllers/event.controller');
 const ActivityController = require('../controllers/activity.controller');
 const mongoose = require('mongoose');
@@ -16,7 +16,7 @@ class CommentController {
 					new: true,
 				}
 			).populate(['likes', 'unlikes']);
-			return editEvent;
+			return editComment;
 		} catch (err) {
 			console.log(err);
 		}
@@ -45,7 +45,7 @@ class CommentController {
 			EventController.addRemoveComment(event, newComment._id);
 		}
 		if (activity) {
-			ActivityController.addRemoveComment(event, newComment._id);
+			ActivityController.addRemoveComment(activity, newComment._id);
 		}
 
 		return newComment;

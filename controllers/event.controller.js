@@ -1,4 +1,10 @@
 const Event = require('../models/event.model');
+const Comment = require('../models/comment.model');
+const Location = require('../models/location.model');
+const Activity = require('../models/activity.model');
+const Image = require('../models/image.model');
+const User = require('../models/user.model');
+
 const mongoose = require('mongoose');
 class EventController {
 	static async get(id) {

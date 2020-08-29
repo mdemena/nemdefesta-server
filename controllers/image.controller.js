@@ -17,30 +17,33 @@ class ImageController {
 		}
 	}
 	static async addImage(_image) {
-		const { title, description, image, activity, event, user } = _image;
+		const { title, description, image, event, activity, user } = _image;
+
 		return await ImageController.add(
 			title,
 			description,
 			image,
-			activity,
 			event,
+			activity,
 			user
 		);
 	}
-	static async add(title, description, image, activity, event, user) {
+	static async add(title, description, image, event, activity, user) {
 		const newImage = await Image.create({
 			title,
 			description,
 			image,
+			event,
+			activity,
 			user,
 			likes: [],
 			unlikes: [],
 		});
 		if (event) {
-			EventController.addRemoveImage(event, newImage._id);
+			await EventController.addRemoveImage(event, newImage._id);
 		}
 		if (activity) {
-			ActivityController.addRemoveImage(activity, newImage._id);
+			await ActivityController.addRemoveImage(activity, newImage._id);
 		}
 		return newImage;
 	}
@@ -48,12 +51,61 @@ class ImageController {
 	static async delete(id) {
 		const delImage = await Image.findByIdAndRemove(id);
 		if (delImage.event) {
-			EventController.addRemoveImage(delImage.event, delImage._id);
+			await EventController.addRemoveImage(delImage.event, delImage._id);
 		}
 		if (delImage.activity) {
-			ActivityController.addRemoveImage(delImage.activity, delImage._id);
+			await ActivityController.addRemoveImage(delImage.activity, delImage._id);
 		}
 		return delImage;
+	}
+	static async addRemoveLike(id, user) {
+		try {
+			return await ImageController.manageSubscriptions(
+				id,
+				user,
+				'likes',
+				'unlikes'
+			);
+		} catch (err) {
+			throw err;
+		}
+	}
+	static async addRemoveUnlike(id, user) {
+		try {
+			return await ImageController.manageSubscriptions(
+				id,
+				user,
+				'unlikes',
+				'likes'
+			);
+		} catch (err) {
+			throw err;
+		}
+	}
+	static async manageSubscriptions(id, document, array, contraArray) {
+		const editImage = await Image.findById(id);
+		if (editImage) {
+			if (!editImage[array].includes(document)) {
+				editImage[array].push(document);
+				if (contraArray) {
+					const contraIndex = editImage[contraArray].findIndex((doc) =>
+						doc.equals(document)
+					);
+					if (contraIndex >= 0) {
+						editImage[contraArray].splice(contraIndex, 1);
+					}
+				}
+			} else {
+				const delIndex = editImage[array].findIndex((doc) =>
+					doc.equals(document)
+				);
+				if (delIndex >= 0) {
+					editImage[array].splice(delIndex, 1);
+				}
+			}
+		}
+		await editImage.save();
+		return await ImageController.get(editImage.id);
 	}
 	static async list(filter) {
 		return await Image.find(filter);

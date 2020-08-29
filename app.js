@@ -70,6 +70,15 @@ app.use('/api/events', eventRoute);
 const locationRoute = require('./routes/location.routes');
 app.use('/api/locations', locationRoute);
 
+const activityRoute = require('./routes/activity.routes');
+app.use('/api/activities', activityRoute);
+
+const commentRoute = require('./routes/comment.routes');
+app.use('/api/comments', commentRoute);
+
+const imageRoute = require('./routes/image.routes');
+app.use('/api/images', imageRoute);
+
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
 	const err = new Error('Not Found');
