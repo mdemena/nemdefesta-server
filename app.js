@@ -73,6 +73,9 @@ app.use('/api/locations', locationRoute);
 const activityRoute = require('./routes/activity.routes');
 app.use('/api/activities', activityRoute);
 
+const copmmentRoute = require('./routes/comment.routes');
+app.use('/api/comments', copmmentRoute);
+
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
 	const err = new Error('Not Found');

@@ -285,10 +285,13 @@ body:
 | PATCH  | /api/activity/unlike/:id | Add an unlike to event              |
 | PATCH  | /api/activity/assist/:id | Add an activity to user assist list |
 
-| Method | URL               | Description                                                                           |
-| ------ | ----------------- | ------------------------------------------------------------------------------------- |
-| GET    | /api/comments     | Return activities list from an event or activity put in params.                       |
-| POST   | /api/comments/:id | Create a new activity in a event or activity and return comment details: Comment data |
+| Method | URL                        | Description                                                                           |
+| ------ | -------------------------- | ------------------------------------------------------------------------------------- |
+| GET    | /api/comments              | Return comments list.                                                                 |
+| GET    | /api/comments/event/:id    | Return comments list from an event.                                                   |
+| GET    | /api/comments/activity/:id | Return comments list from an activity.                                                |
+| GET    | /api/comments/:id          | Return comment details: Comment data, likes, etc.                                     |
+| POST   | /api/comments/:id          | Create a new activity in a event or activity and return comment details: Comment data |
 
 ```
 body:

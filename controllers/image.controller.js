@@ -18,8 +18,6 @@ class ImageController {
 	}
 	static async addImage(_image) {
 		const { title, description, image, event, activity, user } = _image;
-		console.log(title, description, image, event, activity, user);
-		console.log(_image);
 
 		return await ImageController.add(
 			title,
@@ -31,7 +29,6 @@ class ImageController {
 		);
 	}
 	static async add(title, description, image, event, activity, user) {
-		console.log(title, description, image, event, activity, user);
 		const newImage = await Image.create({
 			title,
 			description,

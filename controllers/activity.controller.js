@@ -170,8 +170,8 @@ class ActivityController {
 					editActivity[array].splice(delIndex, 1);
 				}
 			}
+			await editActivity.save();
 		}
-		await editActivity.save();
 		return await ActivityController.get(editActivity.id);
 	}
 
