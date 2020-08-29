@@ -7,14 +7,10 @@ class ImageController {
 		return await Image.findById(id);
 	}
 	static async set(image) {
-		try {
-			const editImage = await Image.findByIdAndUpdate(image._id, image, {
-				new: true,
-			});
-			return editImage;
-		} catch (err) {
-			console.log(err);
-		}
+		const editImage = await Image.findByIdAndUpdate(image._id, image, {
+			new: true,
+		});
+		return editImage;
 	}
 	static async addImage(_image) {
 		const { title, description, image, event, activity, user } = _image;
@@ -59,28 +55,20 @@ class ImageController {
 		return delImage;
 	}
 	static async addRemoveLike(id, user) {
-		try {
-			return await ImageController.manageSubscriptions(
-				id,
-				user,
-				'likes',
-				'unlikes'
-			);
-		} catch (err) {
-			throw err;
-		}
+		return await ImageController.manageSubscriptions(
+			id,
+			user,
+			'likes',
+			'unlikes'
+		);
 	}
 	static async addRemoveUnlike(id, user) {
-		try {
-			return await ImageController.manageSubscriptions(
-				id,
-				user,
-				'unlikes',
-				'likes'
-			);
-		} catch (err) {
-			throw err;
-		}
+		return await ImageController.manageSubscriptions(
+			id,
+			user,
+			'unlikes',
+			'likes'
+		);
 	}
 	static async manageSubscriptions(id, document, array, contraArray) {
 		const editImage = await Image.findById(id);

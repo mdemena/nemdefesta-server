@@ -19,22 +19,18 @@ class EventController {
 		]);
 	}
 	static async set(event) {
-		try {
-			const editEvent = await Event.findByIdAndUpdate(event._id, event, {
-				new: true,
-			}).populate([
-				'locations',
-				'activities',
-				'likes',
-				'unlikes',
-				'attendees',
-				'comments',
-				'images',
-			]);
-			return editEvent;
-		} catch (err) {
-			console.log(err);
-		}
+		const editEvent = await Event.findByIdAndUpdate(event._id, event, {
+			new: true,
+		}).populate([
+			'locations',
+			'activities',
+			'likes',
+			'unlikes',
+			'attendees',
+			'comments',
+			'images',
+		]);
+		return editEvent;
 	}
 	static async addEvent(event) {
 		const {
@@ -76,139 +72,98 @@ class EventController {
 		return newEvent;
 	}
 	static async setImage(id, imagePath) {
-		try {
-			const editEvent = await Event.findByIdAndUpdate(
-				id,
-				{ image: imagePath },
-				{
-					new: true,
-				}
-			).populate([
-				'locations',
-				'activities',
-				'likes',
-				'unlikes',
-				'attendees',
-				'comments',
-				'images',
-			]);
-			return editEvent;
-		} catch (err) {
-			throw err;
-		}
+		const editEvent = await Event.findByIdAndUpdate(
+			id,
+			{ image: imagePath },
+			{
+				new: true,
+			}
+		).populate([
+			'locations',
+			'activities',
+			'likes',
+			'unlikes',
+			'attendees',
+			'comments',
+			'images',
+		]);
+		return editEvent;
 	}
 	static async addRemoveLocation(id, location) {
-		try {
-			return await EventController.manageSubscriptions(
-				id,
-				location,
-				'locations',
-				null
-			);
-		} catch (err) {
-			throw err;
-		}
+		return await EventController.manageSubscriptions(
+			id,
+			location,
+			'locations',
+			null
+		);
 	}
 	static async addRemoveActivity(id, activity) {
-		try {
-			return await EventController.manageSubscriptions(
-				id,
-				activity,
-				'activities',
-				null
-			);
-		} catch (err) {
-			throw err;
-		}
+		return await EventController.manageSubscriptions(
+			id,
+			activity,
+			'activities',
+			null
+		);
 	}
 	static async addRemoveLike(id, user) {
-		try {
-			return await EventController.manageSubscriptions(
-				id,
-				user,
-				'likes',
-				'unlikes'
-			);
-		} catch (err) {
-			throw err;
-		}
+		return await EventController.manageSubscriptions(
+			id,
+			user,
+			'likes',
+			'unlikes'
+		);
 	}
 	static async addRemoveUnlike(id, user) {
-		try {
-			return await EventController.manageSubscriptions(
-				id,
-				user,
-				'unlikes',
-				'likes'
-			);
-		} catch (err) {
-			throw err;
-		}
+		return await EventController.manageSubscriptions(
+			id,
+			user,
+			'unlikes',
+			'likes'
+		);
 	}
 	static async addRemoveAttendee(id, user) {
-		try {
-			return await EventController.manageSubscriptions(
-				id,
-				user,
-				'attendees',
-				null
-			);
-		} catch (err) {
-			throw err;
-		}
+		return await EventController.manageSubscriptions(
+			id,
+			user,
+			'attendees',
+			null
+		);
 	}
 	static async addRemoveComment(id, comment) {
-		try {
-			return await EventController.manageSubscriptions(
-				id,
-				comment,
-				'comments',
-				null
-			);
-		} catch (err) {
-			throw err;
-		}
+		return await EventController.manageSubscriptions(
+			id,
+			comment,
+			'comments',
+			null
+		);
 	}
 	static async addRemoveImage(id, image) {
-		try {
-			return await EventController.manageSubscriptions(
-				id,
-				image,
-				'images',
-				null
-			);
-		} catch (err) {
-			throw err;
-		}
+		return await EventController.manageSubscriptions(id, image, 'images', null);
 	}
 	static async manageSubscriptions(id, document, array, contraArray) {
-		try {
-			const editEvent = await Event.findById(id);
-			if (editEvent) {
-				if (!editEvent[array].includes(document)) {
-					editEvent[array].push(document);
-					if (contraArray) {
-						const contraIndex = editEvent[contraArray].findIndex((doc) =>
-							doc.equals(document)
-						);
-						if (contraIndex >= 0) {
-							editEvent[contraArray].splice(contraIndex, 1);
-						}
-					}
-				} else {
-					const delIndex = editEvent[array].findIndex((doc) =>
+		const editEvent = await Event.findById(id);
+		if (editEvent) {
+			if (!editEvent[array].includes(document)) {
+				editEvent[array].push(document);
+				if (contraArray) {
+					const contraIndex = editEvent[contraArray].findIndex((doc) =>
 						doc.equals(document)
 					);
-					if (delIndex >= 0) {
-						editEvent[array].splice(delIndex, 1);
+					if (contraIndex >= 0) {
+						editEvent[contraArray].splice(contraIndex, 1);
 					}
 				}
+			} else {
+				const delIndex = editEvent[array].findIndex((doc) =>
+					doc.equals(document)
+				);
+				if (delIndex >= 0) {
+					editEvent[array].splice(delIndex, 1);
+				}
 			}
-			await editEvent.save();
-			return await EventController.get(editEvent.id);
-		} catch (err) {
-			throw err;
 		}
+		await editEvent.save();
+		return await EventController.get(editEvent.id);
 	}
 
 	static async delete(id) {

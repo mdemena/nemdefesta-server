@@ -12,18 +12,14 @@ class ActivityController {
 		]);
 	}
 	static async set(activity) {
-		try {
-			const editActivity = await Activity.findByIdAndUpdate(
-				activity._id,
-				activity,
-				{
-					new: true,
-				}
-			).populate(['likes', 'unlikes', 'attendees', 'comments', 'images']);
-			return editActivity;
-		} catch (err) {
-			console.log(err);
-		}
+		const editActivity = await Activity.findByIdAndUpdate(
+			activity._id,
+			activity,
+			{
+				new: true,
+			}
+		).populate(['likes', 'unlikes', 'attendees', 'comments', 'images']);
+		return editActivity;
 	}
 	static async addActivity(activity) {
 		const {
@@ -76,78 +72,54 @@ class ActivityController {
 		return newActivity;
 	}
 	static async setImage(id, imagePath) {
-		try {
-			const editActivity = await Activity.findByIdAndUpdate(
-				id,
-				{ image: imagePath },
-				{
-					new: true,
-				}
-			).populate(['likes', 'unlikes', 'attendees', 'comments', 'images']);
-			return editActivity;
-		} catch (err) {
-			throw err;
-		}
+		const editActivity = await Activity.findByIdAndUpdate(
+			id,
+			{ image: imagePath },
+			{
+				new: true,
+			}
+		).populate(['likes', 'unlikes', 'attendees', 'comments', 'images']);
+		return editActivity;
 	}
 	static async addRemoveLike(id, user) {
-		try {
-			return await ActivityController.manageSubscriptions(
-				id,
-				user,
-				'likes',
-				'unlikes'
-			);
-		} catch (err) {
-			throw err;
-		}
+		return await ActivityController.manageSubscriptions(
+			id,
+			user,
+			'likes',
+			'unlikes'
+		);
 	}
 	static async addRemoveUnlike(id, user) {
-		try {
-			return await ActivityController.manageSubscriptions(
-				id,
-				user,
-				'unlikes',
-				'likes'
-			);
-		} catch (err) {
-			throw err;
-		}
+		return await ActivityController.manageSubscriptions(
+			id,
+			user,
+			'unlikes',
+			'likes'
+		);
 	}
 	static async addRemoveAttendee(id, user) {
-		try {
-			return await ActivityController.manageSubscriptions(
-				id,
-				user,
-				'attendees',
-				null
-			);
-		} catch (err) {
-			throw err;
-		}
+		return await ActivityController.manageSubscriptions(
+			id,
+			user,
+			'attendees',
+			null
+		);
 	}
 	static async addRemoveComment(id, comment) {
-		try {
-			return await ActivityController.manageSubscriptions(
-				id,
-				comment,
-				'comments',
-				null
-			);
-		} catch (err) {
-			throw err;
-		}
+		return await ActivityController.manageSubscriptions(
+			id,
+			comment,
+			'comments',
+			null
+		);
 	}
 	static async addRemoveImage(id, image) {
-		try {
-			return await ActivityController.manageSubscriptions(
-				id,
-				image,
-				'images',
-				null
-			);
-		} catch (err) {
-			throw err;
-		}
+		return await ActivityController.manageSubscriptions(
+			id,
+			image,
+			'images',
+			null
+		);
 	}
 	static async manageSubscriptions(id, document, array, contraArray) {
 		const editActivity = await Activity.findById(id);

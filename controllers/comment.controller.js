@@ -8,18 +8,10 @@ class CommentController {
 		return await Comment.findById(id).populate(['likes', 'unlikes']);
 	}
 	static async set(comment) {
-		try {
-			const editComment = await Comment.findByIdAndUpdate(
-				comment._id,
-				comment,
-				{
-					new: true,
-				}
-			).populate(['likes', 'unlikes']);
-			return editComment;
-		} catch (err) {
-			console.log(err);
-		}
+		const editComment = await Comment.findByIdAndUpdate(comment._id, comment, {
+			new: true,
+		}).populate(['likes', 'unlikes']);
+		return editComment;
 	}
 	static async addComment(comment) {
 		const { title, description, event, activity, user } = comment;
@@ -51,28 +43,20 @@ class CommentController {
 		return newComment;
 	}
 	static async addRemoveLike(id, user) {
-		try {
-			return await CommentController.manageSubscriptions(
-				id,
-				user,
-				'likes',
-				'unlikes'
-			);
-		} catch (err) {
-			throw err;
-		}
+		return await CommentController.manageSubscriptions(
+			id,
+			user,
+			'likes',
+			'unlikes'
+		);
 	}
 	static async addRemoveUnlike(id, user) {
-		try {
-			return await CommentController.manageSubscriptions(
-				id,
-				user,
-				'unlikes',
-				'likes'
-			);
-		} catch (err) {
-			throw err;
-		}
+		return await CommentController.manageSubscriptions(
+			id,
+			user,
+			'unlikes',
+			'likes'
+		);
 	}
 	static async manageSubscriptions(id, document, array, contraArray) {
 		const editComment = await Comment.findById(id);
