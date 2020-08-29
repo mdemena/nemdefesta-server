@@ -6,18 +6,14 @@ class LocationController {
 		return await Location.findById(id).populate('Event');
 	}
 	static async set(location) {
-		try {
-			const editLocation = await Location.findByIdAndUpdate(
-				location._id,
-				location,
-				{
-					new: true,
-				}
-			);
-			return editLocation;
-		} catch (err) {
-			console.log(err);
-		}
+		const editLocation = await Location.findByIdAndUpdate(
+			location._id,
+			location,
+			{
+				new: true,
+			}
+		);
+		return editLocation;
 	}
 	static async addLocation(location) {
 		const { name, address, formattedAddress, gpsLocation, event } = location;
@@ -30,19 +26,15 @@ class LocationController {
 		);
 	}
 	static async add(name, address, formattedAddress, gpsLocation, event) {
-		try {
-			const newLocation = await Location.create({
-				name,
-				address,
-				formattedAddress,
-				gpsLocation,
-				event,
-			});
-			EventController.addRemoveLocation(event, newLocation._id);
-			return newLocation;
-		} catch (err) {
-			throw err;
-		}
+		const newLocation = await Location.create({
+			name,
+			address,
+			formattedAddress,
+			gpsLocation,
+			event,
+		});
+		EventController.addRemoveLocation(event, newLocation._id);
+		return newLocation;
 	}
 
 	static async delete(id) {
