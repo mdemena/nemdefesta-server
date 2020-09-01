@@ -11,11 +11,17 @@ class UserController {
 		return editUser;
 	}
 	static async addUser(user) {
-		const { username, name, email, password } = user;
-		return await UserController.add(username, name, email, password);
+		const { username, name, email, password, googleID } = user;
+		return await UserController.add(username, name, email, password, googleID);
 	}
-	static async add(username, name, email, password) {
-		const newUser = await User.create({ username, name, email, password });
+	static async add(username, name, email, password, googleID) {
+		const newUser = await User.create({
+			username,
+			name,
+			email,
+			password,
+			googleID,
+		});
 		return newUser;
 	}
 	static async setImage(id, image) {
@@ -40,6 +46,9 @@ class UserController {
 	}
 	static async findByUsername(username) {
 		return await User.findOne({ username });
+	}
+	static async findByGoogleID(googleID) {
+		return await User.findOne({ googleID });
 	}
 	static async checkEmail(email) {
 		return await User.findOne({ email });
