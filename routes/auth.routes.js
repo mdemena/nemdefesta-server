@@ -40,8 +40,8 @@ router.get(
 router.get(
 	'/google/callback',
 	passport.authenticate('google', {
-		successRedirect: '/profile',
-		failureRedirect: '/login',
+		successRedirect: process.env.BASE_APP_URL + '/profile',
+		failureRedirect: process.env.BASE_APP_URL + '/login',
 	})
 );
 //Google OAuth Passport Implemented
