@@ -27,6 +27,24 @@ router.post('/login', (req, res, next) => {
 	})(req, res, next);
 });
 
+router.get(
+	'/google',
+	passport.authenticate('google', {
+		scope: [
+			'https://www.googleapis.com/auth/userinfo.profile',
+			'https://www.googleapis.com/auth/userinfo.email',
+		],
+	})
+);
+
+router.get(
+	'/google/callback',
+	passport.authenticate('google', {
+		successRedirect: process.env.BASE_APP_URL + '/profile',
+		failureRedirect: process.env.BASE_APP_URL + '/login',
+	})
+);
+//Google OAuth Passport Implemented
 router.post('/signup', async (req, res, next) => {
 	const { username, name, email, password } = req.body;
 	if (!username || !password) {
