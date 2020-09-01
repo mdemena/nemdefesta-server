@@ -1,5 +1,6 @@
 const UserController = require('../controllers/user.controller');
 const LocalStrategy = require('passport-local').Strategy;
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const bcrypt = require('bcryptjs'); // !!!
 const passport = require('passport');
 
@@ -14,29 +15,92 @@ passport.deserializeUser((userIdFromSession, cb) => {
 });
 
 passport.use(
-	new LocalStrategy((username, password, next) => {
-		console.log(username, password);
-		UserController.findByUsername(username)
-			.then((foundUser) => {
-				if (!foundUser) {
-					next(null, false, {
-						message: 'Usuari incorrecte.',
-					});
-					return;
-				}
+	new LocalStrategy(
+		{ passReqToCallback: true },
+		(req, username, password, next) => {
+			console.log('Passport is authenticating with Locla Strategy');
 
-				if (!bcrypt.compareSync(password, foundUser.password)) {
-					next(null, false, {
-						message: `Clau d'acccés incorrecte`,
-					});
-					return;
-				}
+			UserController.findByUsername(username)
+				.then((foundUser) => {
+					if (!foundUser) {
+						next(null, false, {
+							message: 'Usuari incorrecte.',
+						});
+						return;
+					}
 
-				next(null, foundUser);
-			})
-			.catch((err) => {
-				next(err);
-				return;
-			});
-	})
+					if (!bcrypt.compareSync(password, foundUser.password)) {
+						next(null, false, {
+							message: `Clau d'acccés incorrecte`,
+						});
+						return;
+					}
+
+					next(null, foundUser);
+				})
+				.catch((err) => {
+					next(err);
+					return;
+				});
+		}
+	)
+);
+
+passport.use(
+	new GoogleStrategy(
+		{
+			clientID: process.env.GOOGLE_CLIENT_ID,
+			clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+			callbackURL: '/auth/google/callback',
+		},
+		(accessToken, refreshToken, profile, done) => {
+			// to see the structure of the data in received response:
+			console.log('Google account details:', profile);
+
+			UserController.findByGoogleID(profile.id)
+				.then((foundUser) => {
+					if (foundUser) {
+						done(null, foundUser);
+						return;
+					}
+
+					UserController.findByEmail(profile.emails[0]).then((emailUser) => {
+						if (emailUser) {
+							emailUser['googleID'] = profile.id;
+							UserController.set(emailUser).then((editUser) => {
+								done(null, editUser);
+								return;
+							});
+						} else {
+							UserController.add(
+								profile.emails[0],
+								profile.displayName,
+								profile.emails[0],
+								null,
+								profile.id
+							)
+								.then((newUser) => {
+									if (profile.photos && profile.photos[0]) {
+										UserController.setImage(
+											newUser._id,
+											profile.photos[0]
+										).then((imageUser) => {
+											done(null, imageUser);
+											return;
+										});
+									} else {
+										done(null, newUser);
+										return;
+									}
+								})
+								.catch((err) => done(err));
+						}
+					});
+				})
+				.catch((err) => {
+					next(err);
+					return;
+				});
+		}
+	)
 );
