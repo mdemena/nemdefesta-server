@@ -64,41 +64,43 @@ passport.use(
 						return;
 					}
 
-					UserController.findByEmail(profile.emails[0]).then((emailUser) => {
-						if (emailUser) {
-							emailUser['googleID'] = profile.id;
-							UserController.set(emailUser).then((editUser) => {
-								done(null, editUser);
-								return;
-							});
-						} else {
-							UserController.add(
-								profile.emails[0],
-								profile.displayName,
-								profile.emails[0],
-								null,
-								profile.id
-							)
-								.then((newUser) => {
-									if (profile.photos && profile.photos[0]) {
-										UserController.setImage(
-											newUser._id,
-											profile.photos[0]
-										).then((imageUser) => {
-											done(null, imageUser);
+					UserController.findByEmail(profile.emails[0].value).then(
+						(emailUser) => {
+							if (emailUser) {
+								emailUser['googleID'] = profile.id;
+								UserController.set(emailUser).then((editUser) => {
+									done(null, editUser);
+									return;
+								});
+							} else {
+								UserController.add(
+									profile.emails[0].value,
+									profile.displayName,
+									profile.emails[0].value,
+									null,
+									profile.id
+								)
+									.then((newUser) => {
+										if (profile.photos && profile.photos[0]) {
+											UserController.setImage(
+												newUser._id,
+												profile.photos[0].value
+											).then((imageUser) => {
+												done(null, imageUser);
+												return;
+											});
+										} else {
+											done(null, newUser);
 											return;
-										});
-									} else {
-										done(null, newUser);
-										return;
-									}
-								})
-								.catch((err) => done(err));
+										}
+									})
+									.catch((err) => done(err));
+							}
 						}
-					});
+					);
 				})
 				.catch((err) => {
-					next(err);
+					done(err);
 					return;
 				});
 		}
