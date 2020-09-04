@@ -55,7 +55,7 @@ passport.use(
 		},
 		(accessToken, refreshToken, profile, done) => {
 			// to see the structure of the data in received response:
-			console.log('Google account details:', profile);
+			// console.log('Google account details:', profile);
 
 			UserController.findByGoogleID(profile.id)
 				.then((foundUser) => {
