@@ -22,6 +22,17 @@ const debug = require('debug')(
 );
 
 // Middleware Setup
+app.use(
+	cors({
+		credentials: true,
+		origin: [
+			'http://localhost:3000',
+			'http://dev.nemdefesta.cat',
+			'http://www.nemdefesta.cat',
+			'https://www.nemdefesta.cat',
+		], // <== aceptar llamadas desde este dominio
+	})
+);
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -44,12 +55,6 @@ app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(
-	cors({
-		credentials: true,
-		origin: process.env.CORS_DOMAINS, // <== aceptar llamadas desde este dominio
-	})
-);
 
 // default value for title local
 app.locals.title =
