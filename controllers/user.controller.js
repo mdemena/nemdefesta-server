@@ -55,8 +55,7 @@ class UserController {
 	}
 	static async checkEmailDifferentUser(email, id) {
 		return await User.findOne({
-			email: { $eq: email },
-			_id: { $ne: id },
+			$and: [{ email: { $eq: email } }, { _id: { $ne: id } }],
 		});
 	}
 	static async checkUsername(username) {
@@ -64,8 +63,7 @@ class UserController {
 	}
 	static async checkUsernameDifferentUser(username, id) {
 		return await User.findOne({
-			username: { $eq: username },
-			_id: { $ne: id },
+			$and: [{ username: { $eq: username } }, { _id: { $ne: id } }],
 		});
 	}
 }
