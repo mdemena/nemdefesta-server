@@ -11,7 +11,11 @@ const eventSchema = new mongoose.Schema(
 		},
 		fromDate: { type: Date, required: true },
 		toDate: { type: Date, required: true },
-		image: { type: String },
+		image: {
+			type: String,
+			default:
+				'https://res.cloudinary.com/mdemena/image/upload/v1599602239/nemdefesta-dev/nemdefesta.jpeg.png',
+		},
 		location: {
 			name: { type: String, required: true },
 			address: { type: String, required: true },
