@@ -63,7 +63,7 @@ router.put('/', uploadCloud.single('imageAvatar'), async (req, res, next) => {
 });
 router.patch(
 	'/upload/',
-	uploadCloud.single('imageAvatar'),
+	uploadCloud.single('image'),
 	async (req, res, next) => {
 		if (req.isAuthenticated()) {
 			try {
@@ -85,15 +85,10 @@ router.patch(
 );
 router.post('/checkemail', async (req, res, next) => {
 	try {
-		let exist = null;
-		if (req.user) {
-			exist = await UserController.checkEmailDifferentUser(
-				req.body.email,
-				req.user._id
-			);
-		} else {
-			exist = await UserController.checkEmail(req.body.email);
-		}
+		let exist = await UserController.checkEmailDifferentUser(
+			req.body.email,
+			req.body.id
+		);
 		if (exist) {
 			res.status(200).json(exist);
 		} else {
@@ -105,15 +100,10 @@ router.post('/checkemail', async (req, res, next) => {
 });
 router.post('/checkusername', async (req, res, next) => {
 	try {
-		let exist = null;
-		if (req.user) {
-			exist = await UserController.checkUsernameDifferentUser(
-				req.body.username,
-				req.user._id
-			);
-		} else {
-			exist = await UserController.checkUsername(req.body.username);
-		}
+		let exist = await UserController.checkUsernameDifferentUser(
+			req.body.username,
+			req.body.id
+		);
 		if (exist) {
 			res.status(200).json(exist);
 		} else {

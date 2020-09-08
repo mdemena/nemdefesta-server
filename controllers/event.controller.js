@@ -173,36 +173,45 @@ class EventController {
 	static async listFiltered(
 		fromDate,
 		toDate,
+		searchText,
 		longitude,
 		latitude,
-		distance,
-		searchText
+		distance
 	) {
-		let filter = { fromDate: { $lt: toDate }, toDate: { $gt: fromDate } };
-		if (searchText) {
-			filter = {
-				...filter,
-				$or: [
-					{ name: { $regexp: '.*' + searchText + '.*' } },
-					{ 'location.address': { $regexp: '.*' + searchText + '.*' } },
-				],
-			};
-		}
-		if (longitude && latitude && distance && longitude != 0 && latitude != 0) {
-			filter = {
-				...filter,
-				'location.gpsLocation': {
-					$nearSphere: {
-						$geometry: {
-							type: 'Point',
-							coordinates: [longitude, latitude],
-						},
-						$minDistance: 0,
-						$maxDistance: distance * 1000,
-					},
-				},
-			};
-		}
+		let filter = {
+			fromDate: { $lt: toDate },
+			toDate: { $gt: fromDate },
+		};
+		// if (searchText) {
+		// 	filter = {
+		// 		...filter,
+		// 		$text: { $search: searchText },
+		// 	};
+		// }
+		// if (searchText) {
+		// 	filter = {
+		// 		...filter,
+		// 		$or: [
+		// 			{ name: { $regexp: '.*' + searchText + '.*' } },
+		// 			{ 'location.address': { $regexp: '.*' + searchText + '.*' } },
+		// 		],
+		// 	};
+		// }
+		// if (longitude && latitude && distance && longitude != 0 && latitude != 0) {
+		// 	filter = {
+		// 		...filter,
+		// 		'location.gpsLocation': {
+		// 			$nearSphere: {
+		// 				$geometry: {
+		// 					type: 'Point',
+		// 					coordinates: [longitude, latitude],
+		// 				},
+		// 				$minDistance: 0,
+		// 				$maxDistance: distance * 1000,
+		// 			},
+		// 		},
+		// 	};
+		// }
 		return await EventController.list(filter);
 	}
 	static async list(filter) {
