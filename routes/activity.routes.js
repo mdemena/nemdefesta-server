@@ -91,35 +91,31 @@ router.post(
 		}
 	}
 );
-router.put(
-	'/:id',
-	uploadCloud.single('imageActivity'),
-	async (req, res, next) => {
-		if (req.isAuthenticated()) {
-			const { name, description, fromDate, toDate, location } = req.body;
-			const activity = {
-				_id: req.params.id,
-				name,
-				description,
-				fromDate,
-				toDate,
-				location,
-			};
-			if (req.file) {
-				activity['image'] = req.file.path;
-			}
-
-			const editActivity = await ActivityController.set(activity);
-
-			res.status(200).json(editActivity);
-		} else {
-			res.status(500).json({ message: 'No estàs autenticat' });
+router.put('/:id', uploadCloud.single('image'), async (req, res, next) => {
+	if (req.isAuthenticated()) {
+		const { name, description, fromDate, toDate, location } = req.body;
+		const activity = {
+			_id: req.params.id,
+			name,
+			description,
+			fromDate,
+			toDate,
+			location,
+		};
+		if (req.file) {
+			activity['image'] = req.file.path;
 		}
+
+		const editActivity = await ActivityController.set(activity);
+
+		res.status(200).json(editActivity);
+	} else {
+		res.status(500).json({ message: 'No estàs autenticat' });
 	}
-);
+});
 router.patch(
 	'/upload/:id',
-	uploadCloud.single('imageActivity'),
+	uploadCloud.single('image'),
 	async (req, res, next) => {
 		if (req.isAuthenticated()) {
 			try {
@@ -185,7 +181,7 @@ router.patch('/attendee/:id', async (req, res, next) => {
 	}
 });
 router.patch(
-	'/image/:id',
+	'/upload/:id',
 	uploadCloud.single('imageActivity'),
 	async (req, res, next) => {
 		if (req.isAuthenticated()) {

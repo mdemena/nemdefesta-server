@@ -15,10 +15,10 @@ router.post('/', async (req, res, next) => {
 		let {
 			fromDate,
 			toDate,
+			searchText,
 			longitude,
 			latitude,
 			distance,
-			searchText,
 		} = req.body;
 
 		if (fromDate) {
@@ -211,8 +211,8 @@ router.patch('/attendee/:id', async (req, res, next) => {
 	}
 });
 router.patch(
-	'/image/:id',
-	uploadCloud.single('imageEvent'),
+	'/upload/:id',
+	uploadCloud.single('image'),
 	async (req, res, next) => {
 		if (req.isAuthenticated()) {
 			try {

@@ -63,7 +63,7 @@ router.put('/', uploadCloud.single('imageAvatar'), async (req, res, next) => {
 });
 router.patch(
 	'/upload/',
-	uploadCloud.single('imageAvatar'),
+	uploadCloud.single('image'),
 	async (req, res, next) => {
 		if (req.isAuthenticated()) {
 			try {
