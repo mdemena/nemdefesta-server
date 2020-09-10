@@ -10,12 +10,24 @@ class EventController {
 	static async get(id) {
 		return await Event.findById(id).populate([
 			'locations',
-			'activities',
+			{
+				path: 'activities',
+				populate: { path: 'comments', populate: { path: 'user' } },
+			},
 			'likes',
 			'unlikes',
-			'attendees',
-			'comments',
-			'images',
+			{
+				path: 'attendees',
+				populate: { path: 'user' },
+			},
+			{
+				path: 'comments',
+				populate: { path: 'user' },
+			},
+			{
+				path: 'images',
+				populate: { path: 'user' },
+			},
 		]);
 	}
 	static async set(event) {

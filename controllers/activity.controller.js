@@ -7,7 +7,10 @@ class ActivityController {
 			'likes',
 			'unlikes',
 			'attendees',
-			'comments',
+			{
+				path: 'comments',
+				populate: { path: 'user' },
+			},
 			'images',
 		]);
 	}
