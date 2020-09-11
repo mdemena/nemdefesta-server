@@ -8,12 +8,24 @@ const User = require('../models/user.model');
 const mongoose = require('mongoose');
 class EventController {
 	static async get(id) {
+		// return await Event.findById(id)
+		// 	.populate('locations')
+		// 	.populate('activities')
+		// 	.populate('activities', 'comments user')
+		// 	.populate('activities', 'location')
+		// 	.populate('attendees', 'user')
+		// 	.populate('comments')
+		// 	.populate('comments', 'user');
 		return await Event.findById(id).populate([
 			'locations',
 			{
 				path: 'activities',
-				populate: { path: 'comments', populate: { path: 'user' } },
+				populate: [
+					{ path: 'comments', populate: { path: 'user' } },
+					{ path: 'location' },
+				],
 			},
+
 			'likes',
 			'unlikes',
 			{

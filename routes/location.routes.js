@@ -34,7 +34,7 @@ router.post('/', async (req, res, next) => {
 			formattedAddress,
 			longitude,
 			latitude,
-			eventId,
+			event,
 		} = req.body;
 		try {
 			const location = {
@@ -44,7 +44,7 @@ router.post('/', async (req, res, next) => {
 				gpsLocation: {
 					coordinates: [longitude, latitude],
 				},
-				event: eventId,
+				event: event,
 			};
 
 			const newLocation = await LocationController.addLocation(location);
