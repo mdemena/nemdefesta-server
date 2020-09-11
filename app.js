@@ -30,7 +30,7 @@ app.use(
 			'http://dev.nemdefesta.cat',
 			'http://www.nemdefesta.cat',
 			'https://www.nemdefesta.cat',
-		], // <== aceptar llamadas desde este dominio
+		],
 	})
 );
 app.use(logger('dev'));

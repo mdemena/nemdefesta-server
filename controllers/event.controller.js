@@ -228,10 +228,12 @@ class EventController {
 	}
 	static async list(filter) {
 		console.log('Filter: ', filter);
-		return await Event.find(filter).populate({
-			path: 'comments',
-			populate: { path: 'user' },
-		});
+		return await Event.find(filter)
+			.sort('fromDate')
+			.populate({
+				path: 'comments',
+				populate: { path: 'user' },
+			});
 	}
 	static async listByUser(user) {
 		const filter = { user: user };
