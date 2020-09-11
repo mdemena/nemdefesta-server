@@ -5,12 +5,12 @@ const mongoose = require('mongoose');
 
 class CommentController {
 	static async get(id) {
-		return await Comment.findById(id).populate(['likes', 'unlikes']);
+		return await Comment.findById(id).populate(['likes', 'unlikes', 'user']);
 	}
 	static async set(comment) {
 		const editComment = await Comment.findByIdAndUpdate(comment._id, comment, {
 			new: true,
-		}).populate(['likes', 'unlikes']);
+		}).populate(['likes', 'unlikes', 'user']);
 		return editComment;
 	}
 	static async addComment(comment) {
@@ -96,7 +96,7 @@ class CommentController {
 	}
 
 	static async list(filter) {
-		return await Comment.find(filter);
+		return await Comment.find(filter).sort('-createdAt');
 	}
 	static async listByUser(user) {
 		const filter = { user };

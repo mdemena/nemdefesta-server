@@ -11,7 +11,11 @@ const activitySchema = new mongoose.Schema(
 		},
 		fromDate: { type: Date, required: true },
 		toDate: { type: Date, required: true },
-		image: { type: String },
+		image: {
+			type: String,
+			default:
+				'https://res.cloudinary.com/mdemena/image/upload/v1599602239/nemdefesta-dev/nemdefesta.jpeg.png',
+		},
 		location: { type: mongoose.Schema.Types.ObjectId, ref: 'Location' },
 		likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
 		unlikes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],

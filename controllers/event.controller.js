@@ -8,14 +8,38 @@ const User = require('../models/user.model');
 const mongoose = require('mongoose');
 class EventController {
 	static async get(id) {
+		// return await Event.findById(id)
+		// 	.populate('locations')
+		// 	.populate('activities')
+		// 	.populate('activities', 'comments user')
+		// 	.populate('activities', 'location')
+		// 	.populate('attendees', 'user')
+		// 	.populate('comments')
+		// 	.populate('comments', 'user');
 		return await Event.findById(id).populate([
 			'locations',
-			'activities',
+			{
+				path: 'activities',
+				populate: [
+					{ path: 'comments', populate: { path: 'user' } },
+					{ path: 'location' },
+				],
+			},
+
 			'likes',
 			'unlikes',
-			'attendees',
-			'comments',
-			'images',
+			{
+				path: 'attendees',
+				populate: { path: 'user' },
+			},
+			{
+				path: 'comments',
+				populate: { path: 'user' },
+			},
+			{
+				path: 'images',
+				populate: { path: 'user' },
+			},
 		]);
 	}
 	static async set(event) {
@@ -216,7 +240,12 @@ class EventController {
 	}
 	static async list(filter) {
 		console.log('Filter: ', filter);
-		return await Event.find(filter);
+		return await Event.find(filter)
+			.sort('fromDate')
+			.populate({
+				path: 'comments',
+				populate: { path: 'user' },
+			});
 	}
 	static async listByUser(user) {
 		const filter = { user: user };
