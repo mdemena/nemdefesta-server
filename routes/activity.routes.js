@@ -61,6 +61,14 @@ router.get('/event/:id', async (req, res, next) => {
 		res.status(500).json(err);
 	}
 });
+router.get('/attendee/:id', async (req, res, next) => {
+	try {
+		const activities = await ActivityController.listByAttendee(req.params.id);
+		res.status(200).json(activities);
+	} catch (err) {
+		res.status(500).json(err);
+	}
+});
 router.post(
 	'/add/:id',
 	uploadCloud.single('imageActivity'),

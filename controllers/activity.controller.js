@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 class ActivityController {
 	static async get(id) {
 		return await Activity.findById(id).populate([
+			'location',
 			'likes',
 			'unlikes',
 			'attendees',
@@ -199,6 +200,10 @@ class ActivityController {
 	}
 	static async listByUser(user) {
 		const filter = { user };
+		return await ActivityController.list(filter);
+	}
+	static async listByAttendee(user) {
+		const filter = { attendees: user };
 		return await ActivityController.list(filter);
 	}
 }

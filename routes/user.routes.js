@@ -1,5 +1,9 @@
 const express = require('express');
 const UserController = require('../controllers/user.controller');
+const EventController = require('../controllers/event.controller');
+const ActivityController = require('../controllers/activity.controller');
+const CommentController = require('../controllers/comment.controller');
+const ImageController = require('../controllers/image.controller');
 const router = express.Router();
 const uploadCloud = require('../configs/cloudinary.config.js');
 
@@ -14,6 +18,38 @@ router.get('/', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
 	try {
 		const user = await UserController.get(req.params.id);
+		res.status(200).json(user);
+	} catch (err) {
+		res.status(500).json(err);
+	}
+});
+router.get('/events/:id', async (req, res, next) => {
+	try {
+		const user = await EventController.listByAttendee(req.params.id);
+		res.status(200).json(user);
+	} catch (err) {
+		res.status(500).json(err);
+	}
+});
+router.get('/activities/:id', async (req, res, next) => {
+	try {
+		const user = await ActivityController.listByAttendee(req.params.id);
+		res.status(200).json(user);
+	} catch (err) {
+		res.status(500).json(err);
+	}
+});
+router.get('/comments/:id', async (req, res, next) => {
+	try {
+		const user = await CommentController.listByUser(req.params.id);
+		res.status(200).json(user);
+	} catch (err) {
+		res.status(500).json(err);
+	}
+});
+router.get('/images/:id', async (req, res, next) => {
+	try {
+		const user = await ImageController.listByUser(req.params.id);
 		res.status(200).json(user);
 	} catch (err) {
 		res.status(500).json(err);
