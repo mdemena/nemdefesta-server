@@ -50,8 +50,8 @@ app.use(
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(express.static(path.join(__dirname, 'build')));
+app.use(favicon(path.join(__dirname, 'build', 'favicon.ico')));
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -83,6 +83,10 @@ app.use('/api/comments', commentRoute);
 
 const imageRoute = require('./routes/image.routes');
 app.use('/api/images', imageRoute);
+
+app.use((req, res, next) => {
+	res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
