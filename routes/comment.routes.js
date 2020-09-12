@@ -34,6 +34,14 @@ router.get('/activity/:id', async (req, res, next) => {
 		res.status(500).json(err);
 	}
 });
+router.get('/user/:id', async (req, res, next) => {
+	try {
+		const comments = await CommentController.listByUser(req.params.id);
+		res.status(200).json(comments);
+	} catch (err) {
+		res.status(500).json(err);
+	}
+});
 router.post('/', async (req, res, next) => {
 	if (req.isAuthenticated()) {
 		const { title, description, event, activity } = req.body;

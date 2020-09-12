@@ -251,5 +251,9 @@ class EventController {
 		const filter = { user: user };
 		return await EventController.list(filter);
 	}
+	static async listByAttendee(user) {
+		const filter = { attendees: user };
+		return await EventController.list(filter);
+	}
 }
 module.exports = EventController;
