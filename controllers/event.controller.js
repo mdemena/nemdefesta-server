@@ -206,7 +206,7 @@ class EventController {
 		// 		name: { $regex, $options: 'i' },
 		// 	};
 		// }
-		console.log(filter);
+		//console.log(filter);
 		// if (searchText) {
 		// 	filter = {
 		// 		...filter,
