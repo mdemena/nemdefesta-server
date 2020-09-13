@@ -1,14 +1,4 @@
-ID: 5f5bc47ca282af23665fd94e
-{
-	"name": "Plaça Mossèn Figueres",
-	"address": "Plaça Mossèn Figueres, 1, 08470 Sant Celoni, Barcelona",
-	"formattedAddress": "Plaça Mossèn Figueres, 1, 08470 Sant Celoni, Barcelona, Spain",
-	"longitude": 41.689594,
-	"latitude": 2.490487,
-	"eventId": "{{EVENT_ID}}"
-}
-
-ID: 5f48054263977278a6c15678
+ID: 5f5e8265927ed5001732415c
 {
   "name": "Plaça de la Vila",
   "address": "Plaça de la Vila, 08470 Sant Celoni",
@@ -17,7 +7,7 @@ ID: 5f48054263977278a6c15678
 	"latitude": 2.491937,
   "event": "{{EVENT_ID}}"
 }
-ID: 5f5bc83209202f35e23ef07f
+ID: 5f5e8279927ed5001732415d
 {
   "name": "Teatre Ateneu",
   "address": "Ctra. Vella, 25, 08470 Sant Celoni",
@@ -26,7 +16,7 @@ ID: 5f5bc83209202f35e23ef07f
   "latitude": 2.489384,
   "event": "{{EVENT_ID}}"
 }
-ID: 5f5bc8f5df9c8c37a40ea2b4
+ID: 5f5e8298927ed5001732415e
 {
   "name": "Pistes esportives de Sant Ponç",
   "address": "Carrer Bruc, 77 08470 Sant Celoni",
@@ -35,7 +25,7 @@ ID: 5f5bc8f5df9c8c37a40ea2b4
   "latitude": 2.499077,
   "event": "{{EVENT_ID}}"
 }
-ID: 5f5bc99e43934738c875e74d
+ID: 5f5e82a8927ed5001732415f
 {
   "name": "Pistes esportives de les Illes Belles",
   "address": "Carrer Bisbe Irurita, 2, 08470 Sant Celoni",
@@ -44,7 +34,7 @@ ID: 5f5bc99e43934738c875e74d
   "latitude": 2.503130,
   "event": "{{EVENT_ID}}"
 }
-ID: 5f5bca155b40363a0310567c
+ID: 5f5e82b7927ed50017324160
 {
   "name": "Jardins de la rectoria Vella",
   "address": "Parc de la Rectoria Vella s/n, 08470 Sant Celoni",
@@ -53,7 +43,7 @@ ID: 5f5bca155b40363a0310567c
   "latitude": 2.489510,
   "event": "{{EVENT_ID}}"
 }
-ID: 5f5bcaa9f0a7683affa06eda
+ID: 
 {
   "name": "Pista 3 Camp Municipal d'Esports",
   "address": "Passeig dels Esports, 11, 08470 Sant Celoni",
@@ -62,7 +52,7 @@ ID: 5f5bcaa9f0a7683affa06eda
   "latitude": 2.489049,
   "event": "{{EVENT_ID}}"
 }
-ID: 5f5bcb1635df3f3c04e58362
+ID: 
 {
   "name": "Carrer al Pavelló Sot de les Granotes",
   "address": "Carrer Francesc Macià, 15, 08470 Sant Celoni",
@@ -71,7 +61,7 @@ ID: 5f5bcb1635df3f3c04e58362
   "latitude": 2.482640,
   "event": "{{EVENT_ID}}"
 }
-ID: 5f5bcbb0a4040b3ce5cfba8e
+ID: 5f5e8540927ed5001732416b
 {
   "name": "Pati de Can Ramis",
   "address": "Carrer Sant Josep, 97, 08470 Sant Celoni",
@@ -80,7 +70,7 @@ ID: 5f5bcbb0a4040b3ce5cfba8e
   "latitude": 2.492449,
   "event": "{{EVENT_ID}}"
 }
-ID: 5f5bcc3855998e3ee8be99b1
+ID: 5f5e831f927ed50017324162
 {
   "name": "Aparcament Pavelló 11 de Setembre",
   "address": "Plaça Sector Residenc Esports, 49, 08470 Sant Celoni",
@@ -89,7 +79,7 @@ ID: 5f5bcc3855998e3ee8be99b1
   "latitude": 2.487699,
   "event": "{{EVENT_ID}}"
 }
-ID: 5f5bcc987d4faa3fa9125516
+ID: 5f5e82f7927ed50017324161
 {
   "name": "Camp Municipal d'Esports",
   "address": "Passeig dels Esports, 11, 08470 Sant Celoni",
@@ -98,7 +88,7 @@ ID: 5f5bcc987d4faa3fa9125516
   "latitude": 2.488662,
   "event": "{{EVENT_ID}}"
 }
-ID: 5f5bcdeea6a1c0417610451e
+ID: 
 {
   "name": "Skate Park Sant Celoni",
   "address": "Passeig de la Rectoria Vella s/n, 08470 Sant Celoni",
