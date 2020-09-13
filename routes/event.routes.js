@@ -36,10 +36,10 @@ router.post('/', async (req, res, next) => {
 		const events = await EventController.listFiltered(
 			fromDate.toDate(),
 			toDate.toDate(),
+			searchText,
 			longitude,
 			latitude,
-			distance,
-			searchText
+			distance
 		);
 		res.status(200).json(events);
 	} catch (err) {

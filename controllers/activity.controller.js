@@ -11,7 +11,10 @@ class ActivityController {
 				path: 'comments',
 				populate: { path: 'user' },
 			},
-			'images',
+			{
+				path: 'images',
+				populate: { path: 'user' },
+			},
 		]);
 	}
 	static async set(activity) {
