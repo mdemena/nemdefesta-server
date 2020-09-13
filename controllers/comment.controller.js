@@ -110,10 +110,6 @@ class CommentController {
 		const filter = { activity };
 		return await CommentController.list(filter);
 	}
-	static async listByUser(user) {
-		const filter = { user };
-		return await CommentController.list(filter);
-	}
 }
 
 module.exports = CommentController;
