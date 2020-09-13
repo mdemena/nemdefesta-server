@@ -7,12 +7,14 @@ class ActivityController {
 			'location',
 			'likes',
 			'unlikes',
-			'attendees',
 			{
 				path: 'comments',
 				populate: { path: 'user' },
 			},
-			'images',
+			{
+				path: 'images',
+				populate: { path: 'user' },
+			},
 		]);
 	}
 	static async set(activity) {
@@ -192,7 +194,7 @@ class ActivityController {
 		return await ActivityController.list(filter);
 	}
 	static async list(filter) {
-		return await Activity.find(filter).sort('fromDate');
+		return await Activity.find(filter).sort('fromDate').populate('user');
 	}
 	static async listByEvent(event) {
 		const filter = { event };

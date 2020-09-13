@@ -96,7 +96,7 @@ class CommentController {
 	}
 
 	static async list(filter) {
-		return await Comment.find(filter).sort('-createdAt');
+		return await Comment.find(filter).sort('-createdAt').populate('user');
 	}
 	static async listByUser(user) {
 		const filter = { user };

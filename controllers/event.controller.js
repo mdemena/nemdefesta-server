@@ -4,18 +4,10 @@ const Location = require('../models/location.model');
 const Activity = require('../models/activity.model');
 const Image = require('../models/image.model');
 const User = require('../models/user.model');
-
+const EscapeStringRegExp = require('escape-string-regexp');
 const mongoose = require('mongoose');
 class EventController {
 	static async get(id) {
-		// return await Event.findById(id)
-		// 	.populate('locations')
-		// 	.populate('activities')
-		// 	.populate('activities', 'comments user')
-		// 	.populate('activities', 'location')
-		// 	.populate('attendees', 'user')
-		// 	.populate('comments')
-		// 	.populate('comments', 'user');
 		return await Event.findById(id).populate([
 			'locations',
 			{
@@ -28,10 +20,10 @@ class EventController {
 
 			'likes',
 			'unlikes',
-			{
-				path: 'attendees',
-				populate: { path: 'user' },
-			},
+			// {
+			// 	path: 'attendees',
+			// 	populate: { path: 'user' },
+			// },
 			{
 				path: 'comments',
 				populate: { path: 'user' },
@@ -206,12 +198,15 @@ class EventController {
 			fromDate: { $lt: toDate },
 			toDate: { $gt: fromDate },
 		};
+		// console.log(searchText);
 		// if (searchText) {
+		// 	const $regex = '\b' + EscapeStringRegExp(searchText);
 		// 	filter = {
 		// 		...filter,
-		// 		$text: { $search: searchText },
+		// 		name: { $regex, $options: 'i' },
 		// 	};
 		// }
+		//console.log(filter);
 		// if (searchText) {
 		// 	filter = {
 		// 		...filter,

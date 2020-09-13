@@ -96,7 +96,7 @@ class ImageController {
 		return await ImageController.get(editImage.id);
 	}
 	static async list(filter) {
-		return await Image.find(filter).sort('-createdAt');
+		return await Image.find(filter).sort('-createdAt').populate('user');
 	}
 	static async listByUser(user) {
 		const filter = { user };
