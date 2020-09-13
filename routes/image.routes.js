@@ -39,6 +39,8 @@ router.post('/', uploadCloud.single('image'), async (req, res, next) => {
 	if (req.isAuthenticated()) {
 		const { title, description, event, activity } = req.body;
 		try {
+			console.log('event', event);
+			console.log('activity', activity);
 			const image = {
 				title,
 				description,
