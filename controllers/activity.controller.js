@@ -194,7 +194,9 @@ class ActivityController {
 		return await ActivityController.list(filter);
 	}
 	static async list(filter) {
-		return await Activity.find(filter).sort('fromDate').populate('user');
+		return await Activity.find(filter)
+			.sort('fromDate')
+			.populate(['location', 'user']);
 	}
 	static async listByEvent(event) {
 		const filter = { event };

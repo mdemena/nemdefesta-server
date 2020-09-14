@@ -1,4 +1,5 @@
-ID: 5f5e8265927ed5001732415c
+ID-DEV: 5f5e8265927ed5001732415c
+ID-PRO: 5f5e94e3bc20820017fb9251
 {
   "name": "Plaça de la Vila",
   "address": "Plaça de la Vila, 08470 Sant Celoni",
@@ -7,7 +8,8 @@ ID: 5f5e8265927ed5001732415c
 	"latitude": 2.491937,
   "event": "{{EVENT_ID}}"
 }
-ID: 5f5e8279927ed5001732415d
+ID-DEV: 5f5e8279927ed5001732415d
+ID-PRO: 5f5e9512bc20820017fb9252
 {
   "name": "Teatre Ateneu",
   "address": "Ctra. Vella, 25, 08470 Sant Celoni",
@@ -16,7 +18,7 @@ ID: 5f5e8279927ed5001732415d
   "latitude": 2.489384,
   "event": "{{EVENT_ID}}"
 }
-ID: 5f5e8298927ed5001732415e
+ID-DEV: 5f5e8298927ed5001732415e
 {
   "name": "Pistes esportives de Sant Ponç",
   "address": "Carrer Bruc, 77 08470 Sant Celoni",
@@ -25,7 +27,7 @@ ID: 5f5e8298927ed5001732415e
   "latitude": 2.499077,
   "event": "{{EVENT_ID}}"
 }
-ID: 5f5e82a8927ed5001732415f
+ID-DEV: 5f5e82a8927ed5001732415f
 {
   "name": "Pistes esportives de les Illes Belles",
   "address": "Carrer Bisbe Irurita, 2, 08470 Sant Celoni",
@@ -34,7 +36,8 @@ ID: 5f5e82a8927ed5001732415f
   "latitude": 2.503130,
   "event": "{{EVENT_ID}}"
 }
-ID: 5f5e82b7927ed50017324160
+ID-DEV: 5f5e82b7927ed50017324160
+ID-PRO: 5f5e9523bc20820017fb9253
 {
   "name": "Jardins de la rectoria Vella",
   "address": "Parc de la Rectoria Vella s/n, 08470 Sant Celoni",
@@ -43,7 +46,7 @@ ID: 5f5e82b7927ed50017324160
   "latitude": 2.489510,
   "event": "{{EVENT_ID}}"
 }
-ID: 
+ID-DEV: 
 {
   "name": "Pista 3 Camp Municipal d'Esports",
   "address": "Passeig dels Esports, 11, 08470 Sant Celoni",
@@ -52,7 +55,7 @@ ID:
   "latitude": 2.489049,
   "event": "{{EVENT_ID}}"
 }
-ID: 
+ID-DEV: 
 {
   "name": "Carrer al Pavelló Sot de les Granotes",
   "address": "Carrer Francesc Macià, 15, 08470 Sant Celoni",
@@ -61,7 +64,7 @@ ID:
   "latitude": 2.482640,
   "event": "{{EVENT_ID}}"
 }
-ID: 5f5e8540927ed5001732416b
+ID-DEV: 5f5e8540927ed5001732416b
 {
   "name": "Pati de Can Ramis",
   "address": "Carrer Sant Josep, 97, 08470 Sant Celoni",
@@ -70,7 +73,7 @@ ID: 5f5e8540927ed5001732416b
   "latitude": 2.492449,
   "event": "{{EVENT_ID}}"
 }
-ID: 5f5e831f927ed50017324162
+ID-DEV: 5f5e831f927ed50017324162
 {
   "name": "Aparcament Pavelló 11 de Setembre",
   "address": "Plaça Sector Residenc Esports, 49, 08470 Sant Celoni",
@@ -79,7 +82,8 @@ ID: 5f5e831f927ed50017324162
   "latitude": 2.487699,
   "event": "{{EVENT_ID}}"
 }
-ID: 5f5e82f7927ed50017324161
+ID-DEV: 5f5e82f7927ed50017324161
+ID-PRO: 5f5e953ebc20820017fb9254
 {
   "name": "Camp Municipal d'Esports",
   "address": "Passeig dels Esports, 11, 08470 Sant Celoni",
@@ -88,7 +92,7 @@ ID: 5f5e82f7927ed50017324161
   "latitude": 2.488662,
   "event": "{{EVENT_ID}}"
 }
-ID: 
+ID-DEV: 
 {
   "name": "Skate Park Sant Celoni",
   "address": "Passeig de la Rectoria Vella s/n, 08470 Sant Celoni",
