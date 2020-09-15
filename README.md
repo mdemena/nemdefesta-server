@@ -306,7 +306,10 @@ body: - title - description - event - activity
 
 ```
 
-body: - title - description
+body:
+
+- title
+- description
 
 ```
 
@@ -470,5 +473,5 @@ Image model
 
 ### Slides
 
-[Slides Link](http://slides.com)
+[Slides Link](https://docs.google.com/presentation/d/1TFT4MVaS1SrD95ApnqPSXj-ORZGGYm_g8NZiNooRmpg/edit?usp=sharing)
 ```
