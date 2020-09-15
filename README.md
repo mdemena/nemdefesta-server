@@ -453,8 +453,6 @@ Image model
 
 ## Links
 
-## Links
-
 ### Wireframes
 
 [Wireframes](https://excalidraw.com/#json=6310275766550528,jC9GmdLS5-t-SHJT2pUBkw)
