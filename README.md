@@ -94,6 +94,7 @@ body:
 ```
 body:
     - email
+```
 
 | Method | URL                 | Description                                   |
 | ------ | ------------------- | --------------------------------------------- |
@@ -107,9 +108,10 @@ body:
 | PUT    | /api/user/          | Update User data info                         |
 
 ```
-
-body: - email - - username - - name
-
+body:
+    - email
+    - username
+    - name
 ```
 
 | Method | URL              | Description       |
@@ -117,9 +119,8 @@ body: - email - - username - - name
 | PATCH  | /api/user/upload | Update User image |
 
 ```
-
-body: - image
-
+body:
+    - image
 ```
 
 | Method | URL                     | Description                         |
@@ -127,9 +128,8 @@ body: - image
 | POST   | /api/user/checkusername | Check if username exist in database |
 
 ```
-
-body: - username
-
+body:
+    - username
 ```
 
 | Method | URL                  | Description                      |
@@ -137,9 +137,8 @@ body: - username
 | POST   | /api/user/checkemail | Check if email exist in database |
 
 ```
-
-body: - email
-
+body:
+    - email
 ```
 
 | Method | URL          | Description                            |
@@ -147,9 +146,10 @@ body: - email
 | POST   | /api/events/ | Return events list match filter params |
 
 ```
-
-body: - fromDate - toDate - searchText
-
+body:
+    - fromDate
+    - toDate
+    - searchText
 ```
 
 | Method | URL                      | Description                                                  |
@@ -159,9 +159,13 @@ body: - fromDate - toDate - searchText
 | POST   | /api/events/add/         | Create a new event and return event details: Event data      |
 
 ```
-
-body: - name - description - from - to - image - location
-
+body:
+    - name
+    - description
+    - fromDate
+    - toDate
+    - image
+    - location
 ```
 
 | Method | URL             | Description                                                              |
@@ -170,11 +174,12 @@ body: - name - description - from - to - image - location
 | PUT    | /api/events/:id | Update event info and return event details: Event data                   |
 
 ```
-
-body: - name - description
-
-- from - to - location
-
+body:
+    - name
+    - description
+    - fromDate
+    - toDate
+    - location
 ```
 
 | Method | URL                    | Description        |
@@ -182,9 +187,8 @@ body: - name - description
 | PATCH  | /api/events/upload/:id | Update event image |
 
 ```
-
-body: - image
-
+body:
+    - image
 ```
 
 | Method | URL                   | Description                             |
@@ -192,9 +196,10 @@ body: - image
 | PATCH  | /api/events/image/:id | Add an image to image list for an event |
 
 ```
-
-body: - title - description - image
-
+body:
+    - title
+    - description
+    - image
 ```
 
 | Method | URL                      | Description                                                                  |
@@ -208,9 +213,13 @@ body: - title - description - image
 | POST   | /api/locations/          | Create a new location event and return location event details: Location data |
 
 ```
-
-body: - name - address - formatted_address - lat - lng - event
-
+body:
+    - name
+    - address
+    - formattedAddress
+    - lat
+    - lng
+    - event
 ```
 
 | Method | URL                | Description                                                     |
@@ -219,9 +228,12 @@ body: - name - address - formatted_address - lat - lng - event
 | PUT    | /api/locations/:id | Update location info and return location details: Location data |
 
 ```
-
-body: - name - address - formatted_address - lat - lng
-
+body:
+    - name
+    - address
+    - formatted_address
+    - lat
+    - lng
 ```
 
 | Method | URL              | Description                                |
@@ -229,9 +241,13 @@ body: - name - address - formatted_address - lat - lng
 | POST   | /api/activities/ | Return activities list match filter params |
 
 ```
-
-body: - fromDate - toDate - longitude - lalitude - distance - searchText
-
+body:
+    - fromDate
+    - toDate
+    - longitude
+    - lalitude
+    - distance
+    - searchText
 ```
 
 | Method | URL                          | Description                                                                 |
@@ -242,9 +258,13 @@ body: - fromDate - toDate - longitude - lalitude - distance - searchText
 | POST   | /api/activities/add/:id      | Create a new activity in a event and return activity details: Activity data |
 
 ```
-
-body: - name - description - from - to - image - location
-
+body:
+    - name
+    - description
+    - fromDate
+    - toDate
+    - image
+    - location
 ```
 
 | Method | URL                 | Description                                                                       |
@@ -253,9 +273,12 @@ body: - name - description - from - to - image - location
 | PUT    | /api/activities/:id | Update activity info and return activity details: Activity data                   |
 
 ```
-
-body: - name - description - from - to - location
-
+body:
+    - name
+    - description
+    - fromDate
+    - toDate
+    - location
 ```
 
 | Method | URL                      | Description           |
@@ -263,9 +286,8 @@ body: - name - description - from - to - location
 | PATCH  | /api/activity/upload/:id | Update activity image |
 
 ```
-
-body: - image
-
+body:
+    - image
 ```
 
 | Method | URL                     | Description                                |
@@ -273,19 +295,17 @@ body: - image
 | PATCH  | /api/activity/image/:id | Add an image to image list for an activity |
 
 ```
-
-body: - title - description - image
-
+body:
+    - title
+    - description
+    - image
 ```
-
-| Method | URL                      | Description                         |
-| ------ | ------------------------ | ----------------------------------- |
-| PATCH  | /api/activity/like/:id   | Add a like to event                 |
-| PATCH  | /api/activity/unlike/:id | Add an unlike to event              |
-| PATCH  | /api/activity/assist/:id | Add an activity to user assist list |
 
 | Method | URL                        | Description                                                                           |
 | ------ | -------------------------- | ------------------------------------------------------------------------------------- |
+| PATCH  | /api/activity/like/:id     | Add a like to event                                                                   |
+| PATCH  | /api/activity/unlike/:id   | Add an unlike to event                                                                |
+| PATCH  | /api/activity/assist/:id   | Add an activity to user assist list                                                   |
 | GET    | /api/comments              | Return comments list.                                                                 |
 | GET    | /api/comments/event/:id    | Return comments list from an event.                                                   |
 | GET    | /api/comments/activity/:id | Return comments list from an activity.                                                |
@@ -294,9 +314,11 @@ body: - title - description - image
 | POST   | /api/comments/:id          | Create a new activity in a event or activity and return comment details: Comment data |
 
 ```
-
-body: - title - description - event - activity
-
+body:
+    - title
+    - description
+    - event
+    - activity
 ```
 
 | Method | URL               | Description                                                   |
@@ -305,12 +327,9 @@ body: - title - description - event - activity
 | PUT    | /api/comments/:id | Update comments info and return comment details: Comment data |
 
 ```
-
 body:
-
-- title
-- description
-
+    - title
+    - description
 ```
 
 | Method | URL                      | Description                                                                        |
@@ -324,9 +343,12 @@ body:
 | POST   | /api/images/:id          | Create a new image in a event or activity and return comment details: Comment data |
 
 ```
-
-body: - title - description - image - event - activity
-
+body:
+    - title
+    - description
+    - image
+    - event
+    - activity
 ```
 
 | Method | URL             | Description                                            |
@@ -335,9 +357,9 @@ body: - title - description - image - event - activity
 | PUT    | /api/images/:id | Update image info and return image details: Image data |
 
 ```
-
-body: - title - description
-
+body:
+    - title
+    - description
 ```
 
 | Method | URL                   | Description            |
@@ -348,21 +370,16 @@ body: - title - description
 ## Models
 
 ```
-
 User model
-
 - username: String
 - email: String
 - name: String
 - password: String
 - image: String
-
 ```
 
 ```
-
 Event model
-
 - name: String
 - description: String
 - type: String
@@ -382,26 +399,20 @@ Event model
 - assistants: Array of User id
 - comments: Array of Comment id
 - user: User id
-
 ```
 
 ```
-
 Location model
-
 - name: String
 - address: String
 - formatted_address: String
 - lat: Number
 - lng: Number
 - event: Event id
-
 ```
 
 ```
-
 Activity model
-
 - name: String
 - description: String
 - type: String
@@ -415,13 +426,10 @@ Activity model
 - assistants: Array of User id
 - comments: Array of Comment id
 - event: Event id
-
 ```
 
 ```
-
 Comment model
-
 - title: String
 - description: String
 - likes: Array of User id,
@@ -429,13 +437,10 @@ Comment model
 - event: Event Id
 - activity: Activity Id
 - user: User Id
-
 ```
 
 ```
-
 Image model
-
 - title: String
 - description: String
 - image: String
@@ -444,7 +449,6 @@ Image model
 - event: Event Id
 - activity: Activity Id
 - user: User Id
-
 ```
 
 ## Links
@@ -474,4 +478,7 @@ Image model
 ### Slides
 
 [Slides Link](https://docs.google.com/presentation/d/1TFT4MVaS1SrD95ApnqPSXj-ORZGGYm_g8NZiNooRmpg/edit?usp=sharing)
+
+```
+
 ```
