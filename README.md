@@ -467,11 +467,11 @@ Image model
 
 ### DEV Environment
 
-[Deploy Link]('https://server-dev.nemdefesta.cat/')
+[Deploy Link](http://server-dev.nemdefesta.cat/)
 
 ### PRO Environment
 
-[Deploy Link]('https://server.nemdefesta.cat/')
+[Deploy Link](https://server.nemdefesta.cat/)
 
 ### Slides
 
