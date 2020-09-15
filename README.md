@@ -476,7 +476,3 @@ Image model
 ### Slides
 
 [Slides Link](https://docs.google.com/presentation/d/1TFT4MVaS1SrD95ApnqPSXj-ORZGGYm_g8NZiNooRmpg/edit?usp=sharing)
-
-```
-
-```
