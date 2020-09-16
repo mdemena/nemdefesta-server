@@ -475,4 +475,4 @@ Image model
 
 ### Slides
 
-[Slides Link](https://docs.google.com/presentation/d/1TFT4MVaS1SrD95ApnqPSXj-ORZGGYm_g8NZiNooRmpg/edit?usp=sharing)
+[Slides Link](https://docs.google.com/presentation/d/14SVrIjFylvr0mAZyPgFpTN9lceGhFn2wouuHVY-ykzs/edit?usp=sharing)
