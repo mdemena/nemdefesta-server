@@ -1,5 +1,5 @@
 ID-DEV: 5f5e8265927ed5001732415c
-ID-PRO: 5f5e94e3bc20820017fb9251
+ID-PRO: 5f6255083008140017629e4c
 {
   "name": "Plaça de la Vila",
   "address": "Plaça de la Vila, 08470 Sant Celoni",
@@ -9,7 +9,7 @@ ID-PRO: 5f5e94e3bc20820017fb9251
   "event": "{{EVENT_ID}}"
 }
 ID-DEV: 5f5e8279927ed5001732415d
-ID-PRO: 5f5e9512bc20820017fb9252
+ID-PRO: 5f62551b3008140017629e4d
 {
   "name": "Teatre Ateneu",
   "address": "Ctra. Vella, 25, 08470 Sant Celoni",
@@ -37,7 +37,7 @@ ID-DEV: 5f5e82a8927ed5001732415f
   "event": "{{EVENT_ID}}"
 }
 ID-DEV: 5f5e82b7927ed50017324160
-ID-PRO: 5f5e9523bc20820017fb9253
+ID-PRO: 5f62552c3008140017629e4e
 {
   "name": "Jardins de la rectoria Vella",
   "address": "Parc de la Rectoria Vella s/n, 08470 Sant Celoni",
@@ -65,8 +65,9 @@ ID-DEV:
   "event": "{{EVENT_ID}}"
 }
 ID-DEV: 5f5e8540927ed5001732416b
+ID-PRO: 5f6254db3008140017629e4b
 {
-  "name": "Pati de Can Ramis",
+  "name": "Can Ramis",
   "address": "Carrer Sant Josep, 97, 08470 Sant Celoni",
   "formattedAddress": "Carrer Sant Josep, 97, 08470 Sant Celoni, Barcelona",
   "longitude": 41.689583,
@@ -83,7 +84,7 @@ ID-DEV: 5f5e831f927ed50017324162
   "event": "{{EVENT_ID}}"
 }
 ID-DEV: 5f5e82f7927ed50017324161
-ID-PRO: 5f5e953ebc20820017fb9254
+ID-PRO: 5f62553c3008140017629e4f
 {
   "name": "Camp Municipal d'Esports",
   "address": "Passeig dels Esports, 11, 08470 Sant Celoni",
@@ -99,5 +100,35 @@ ID-DEV:
   "formattedAddress": "Passeig de la Rectoria Vella s/n, 08470 Sant Celoni, Barcelona",
   "longitude": 41.694266,  
   "latitude": 2.485583,
+  "event": "{{EVENT_ID}}"
+}
+
+Torelló
+
+ID-PRO: 5f625b183008140017629e56
+{
+  "name": "Plaça Nova",
+  "address": "Plaça Nova, 08570 Torelló",
+  "formattedAddress": "Plaça Nova, 08570 Torelló, Barcelona",
+  "longitude": 42.047368,  
+  "latitude": 2.263490,
+  "event": "{{EVENT_ID}}"
+}
+ID-PRO: 5f625c7c3008140017629e5a
+{
+  "name": "Plaça de la Vila",
+  "address": "Plaça de la Vila, 08570 Torelló",
+  "formattedAddress": "Plaça de la Vila, 08570 Torelló, Barcelona",
+  "longitude": 42.046729, 
+  "latitude": 2.262870,
+  "event": "{{EVENT_ID}}"
+}
+ID-PRO:
+{
+  "name": "Plaça de la Vila",
+  "address": "Plaça de la Vila, 08570 Torelló",
+  "formattedAddress": "Plaça de la Vila, 08570 Torelló, Barcelona",
+  "longitude": 42.046729, 
+  "latitude": 2.262870,
   "event": "{{EVENT_ID}}"
 }
